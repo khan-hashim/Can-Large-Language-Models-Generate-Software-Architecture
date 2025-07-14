@@ -1,0 +1,56 @@
+@startuml
+package "E-Commerce Platform" {
+
+    [Frontend] as Frontend
+    [Session Manager] as SessionManager
+    [Product API] as ProductAPI
+    [Cart API] as CartAPI
+    [Order Service] as OrderService
+
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Recommendation] as Recommendation
+    [Ads] as Ads
+    [Currency] as Currency
+    [Payment Gateway] as PaymentGateway
+    [Shipping Calculator] as ShippingCalculator
+    [Email Service] as EmailService
+
+    [Product DB] as ProductsDB
+    [Cart Store] as CartStore
+    [Order DB] as OrderDB
+
+    [Exchange Rate Provider] as FXProvider
+    [Payment Processor] as PaymentProcessor
+    [Shipping Carrier API] as ShippingAPI
+    [Ads Provider] as AdsProvider
+    [SMTP Server] as SmtpServer
+
+    Frontend --> SessionManager
+    SessionManager --> CartAPI
+    Frontend --> ProductAPI
+    ProductAPI --> Catalog
+    Catalog --> ProductsDB
+
+    CartAPI --> Cart
+    Cart --> CartStore
+    Cart --> ProductsDB
+
+    CartAPI --> OrderService
+    OrderService --> Cart
+    OrderService --> Currency
+    OrderService --> PaymentGateway
+    OrderService --> ShippingCalculator
+    OrderService --> EmailService
+    OrderService --> OrderDB
+
+    Currency --> FXProvider
+    PaymentGateway --> PaymentProcessor
+    ShippingCalculator --> ShippingAPI
+    EmailService --> SmtpServer
+
+    Recommendation --> Catalog
+    Recommendation --> Cart
+    Ads --> AdsProvider
+}
+@enduml

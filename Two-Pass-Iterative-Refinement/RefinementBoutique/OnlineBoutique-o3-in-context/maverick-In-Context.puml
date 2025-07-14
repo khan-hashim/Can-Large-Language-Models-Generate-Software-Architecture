@@ -1,0 +1,44 @@
+@startuml
+package ECommercePlatform {
+[Frontend] as Frontend
+[Catalog] as Catalog
+[Cart] as Cart
+[Checkout] as Checkout
+[Payment] as Payment
+[Shipping Estimator] as ShippingEstimator
+[Currency] as Currency
+[Recommendation] as Recommendation
+[Email] as Email
+[Advertisement] as Advertisement
+[Session Management] as SessionManagement
+[Currency Provider] as CurrencyProvider
+[Payment Gateway] as PaymentGateway
+[Shipping Provider] as ShippingProvider
+[Ad Provider] as AdProvider
+
+Frontend --> Catalog
+Frontend --> Cart
+Frontend --> Checkout
+Frontend --> Recommendation
+Frontend --> Advertisement
+Frontend --> SessionManagement
+
+Cart --> Catalog
+
+Checkout --> Cart
+Checkout --> Payment
+Checkout --> ShippingEstimator
+Checkout --> Email
+Checkout --> Currency
+
+Payment --> PaymentGateway
+ShippingEstimator --> ShippingProvider
+Currency --> CurrencyProvider
+Recommendation --> Catalog
+Advertisement --> AdProvider
+
+Currency --> Catalog
+ShippingEstimator --> Catalog
+}
+
+@enduml

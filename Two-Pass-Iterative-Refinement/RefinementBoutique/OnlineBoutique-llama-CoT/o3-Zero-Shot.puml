@@ -1,0 +1,71 @@
+@startuml
+package EcommercePlatform {
+
+[User Browser]             as User
+[Frontend]             as Frontend
+[API Gateway]        as APIGateway
+
+[Catalog]  as Catalog
+[Cart Service]             as CartService
+[Recommendation]   as Recommend
+[Ads]    as Ads
+[Currency Converter] as CurrencyConverter
+[Checkout Orchestrator]    as CheckoutOrchestrator
+[Order Service]            as OrderService
+[Order Creator]            as OrderCreator
+[Payment Processor]          as PaymentProcessor
+[Payment Gateway]         as PaymentGateway
+[Shipping Calculator]         as ShippingCalculator
+[Email Service] as EmailService
+
+[Catalog DB]               as ProductsDB
+[Cart DB]                  as CartDB
+[Order DB]                 as OrderDB
+[Currency Cache]           as CurrencyCache
+
+[Shipping Carrier API]     as ShippingAPI
+[Exchange Rate API]        as ExchangeRateAPI
+[Ad Network]               as AdNet
+[SMTP / Email]    as SMTP
+
+
+User --> Frontend
+Frontend --> APIGateway
+
+
+APIGateway --> Catalog
+APIGateway --> CartService
+APIGateway --> Recommend
+APIGateway --> Ads
+APIGateway --> CurrencyConverter
+APIGateway --> CheckoutOrchestrator
+
+
+Catalog  --> ProductsDB
+CartService     --> CartDB
+OrderService    --> OrderDB
+
+Recommend --> Catalog
+Recommend --> CartService
+
+Ads --> AdNet
+
+CurrencyConverter --> ExchangeRateAPI
+CurrencyConverter --> CurrencyCache
+
+CheckoutOrchestrator --> OrderCreator
+CheckoutOrchestrator --> PaymentProcessor
+CheckoutOrchestrator --> ShippingCalculator
+CheckoutOrchestrator --> EmailService
+
+OrderCreator --> OrderService
+OrderService --> OrderDB
+PaymentProcessor --> PaymentGateway
+PaymentGateway --> CurrencyConverter
+
+ShippingCalculator --> ShippingAPI
+EmailService --> SMTP
+
+OrderCreator --> CartService
+}
+@enduml

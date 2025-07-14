@@ -1,0 +1,26 @@
+@startuml
+package MeetingManagementPlatform {
+  [Frontend] as WebInterface
+  [User Management] as UserManagement
+  [Group Management] as GroupManagement
+  [Meeting Scheduling] as MeetingScheduling
+  [Payment Service] as PaymentService
+  [Database] as Database
+
+  WebInterface --> UserManagement: handles user registration, login & roles
+  WebInterface --> GroupManagement: handles group proposals, creation & admin approvals
+  WebInterface --> MeetingScheduling: handles meeting creation, details & management
+
+  UserManagement --> Database: stores user profiles & roles
+  GroupManagement --> Database: stores meeting group data & proposals
+  MeetingScheduling --> Database: stores meeting details & attendance
+  PaymentService --> Database: stores payment transactions & group subscriptions
+
+  UserManagement --> GroupManagement: provides user role information (e.g., for admin actions)
+
+  GroupManagement --> PaymentService: processes group payments & checks group payment status
+  GroupManagement --> MeetingScheduling: provides approved group context & payment validity for meeting creation
+
+  MeetingScheduling --> PaymentService: processes per-meeting fees (if applicable)
+}
+@enduml

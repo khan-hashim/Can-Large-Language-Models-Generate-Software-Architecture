@@ -1,0 +1,47 @@
+@startuml
+package MeetingManagementPlatform {
+
+  [WebInterface] as WebInterface
+  [UserManagement] as UserMgmt
+  [Registrations] as Registrations
+  [AccessControl] as AccessControl
+  [ProposalReview] as ProposalReview
+  [MeetingGroupManagement] as MeetingGroupMgmt
+  [Meetings] as MeetingMgmt
+  [Payments] as PaymentProcessing
+  [Persistence] as Persistence
+
+  ' User registration and authentication flow
+  WebInterface --> Registrations: User sign-up with roles
+  WebInterface --> UserMgmt: User authentication & session management
+  Registrations --> UserMgmt: New user data
+  UserMgmt --> AccessControl: Provide user roles and permissions
+
+  ' Access control used by all major components
+  WebInterface --> AccessControl: Check user permissions for UI features
+  MeetingGroupMgmt --> AccessControl: Verify user role for proposals & management
+  ProposalReview --> AccessControl: Verify admin permissions
+  MeetingMgmt --> AccessControl: Verify user membership & permissions
+
+  ' Meeting group proposal lifecycle
+  WebInterface --> MeetingGroupMgmt: Submit meeting group proposal
+  MeetingGroupMgmt --> ProposalReview: Forward proposals for approval
+  ProposalReview --> MeetingGroupMgmt: Approve or reject proposals
+
+  ' Payment processing and validation
+  MeetingGroupMgmt --> PaymentProcessing: Check/validate group payment status (before approval & continued activity)
+  MeetingMgmt --> PaymentProcessing: Check/validate per-meeting fee payment (before meeting creation)
+  PaymentProcessing --> Persistence: Store payment records
+
+  ' Meeting creation for approved groups
+  MeetingGroupMgmt --> MeetingMgmt: Provide approved groups info
+  MeetingMgmt --> Persistence: Store meetings data
+  MeetingGroupMgmt --> Persistence: Store meeting groups data
+
+  ' User info persistence
+  Registrations --> Persistence: Store user registration data
+  UserMgmt --> Persistence: Store user sessions and profiles
+
+}
+
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+'Community Meeting Management Platform - Corrected High-level Components
+skinparam componentStyle rectangle
+
+[Frontend] as WebClient
+[API Gateway] as APIGateway
+[Auth & User Management Service] as UserManagement
+[Group Management Service] as GroupService
+[Meeting Management Service] as MeetingService
+[Payment Processing Service] as PaymentService
+[Notification Service] as NotificationService
+[External Payment Gateway] as PaymentGateway
+[Relational Database] as Database
+
+' -- Communication Flow --
+
+WebClient --> APIGateway
+
+APIGateway --> UserManagement
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+
+' -- Service Data Persistence --
+
+UserManagement --> Database
+GroupService --> Database
+MeetingService --> Database
+PaymentService --> Database
+
+' -- Internal Service Interactions & Workflow Enforcement --
+
+' Authorization and Role Checks
+GroupService --> UserManagement
+MeetingService --> UserManagement
+
+' Group Proposal and Approval Workflow
+WebClient --> APIGateway
+APIGateway --> GroupService
+GroupService --> NotificationService
+WebClient --> APIGateway
+APIGateway --> GroupService
+GroupService --> NotificationService
+
+' Payment Enforcement
+GroupService --> PaymentService
+MeetingService --> PaymentService
+MeetingService --> PaymentService
+
+PaymentService --> PaymentGateway
+PaymentService --> NotificationService
+
+' General Notifications
+GroupService --> NotificationService
+MeetingService --> NotificationService
+
+NotificationService --> WebClient
+@enduml

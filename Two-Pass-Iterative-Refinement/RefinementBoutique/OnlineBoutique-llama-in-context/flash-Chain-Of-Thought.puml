@@ -1,0 +1,47 @@
+@startuml
+package ECommercePlatform {
+
+    [Frontend] as Frontend
+    [API Gateway] as APIGateway
+    [CatalogService] as Catalog
+    [CartManager] as CartManager
+    [CartInterface] as CartInterface
+    [OrderManager] as OrderManager
+    [PaymentService] as Payment
+    [ShippingService] as Shipping
+    [CurrencyService] as Currency
+    [RecommendationService] as Recommendation
+    [AdsService] as Ads
+    [NotificationService] as Notification
+    [SessionManager] as SessionManager
+
+    database "ProductsDB" as ProductsDB
+    database "CartDB" as CartDB
+    database "OrderDB" as OrderDB
+    database "SessionDB" as SessionDB
+
+    Frontend --> APIGateway
+    APIGateway --> CartInterface
+    APIGateway --> Catalog
+    CartInterface --> CartManager
+    CartManager --> CartDB
+    CartManager --> SessionManager
+    Catalog --> ProductsDB
+    Catalog --> Currency
+
+    OrderManager --> CartManager
+    OrderManager --> Payment
+    OrderManager --> Shipping
+    OrderManager --> Notification
+    OrderManager --> OrderDB
+    Payment --> OrderDB
+    Shipping --> OrderDB
+
+    Recommendation --> CartManager
+    Recommendation --> Catalog
+    Ads --> Catalog
+    SessionManager --> SessionDB
+    Notification --> SessionManager
+}
+
+@enduml

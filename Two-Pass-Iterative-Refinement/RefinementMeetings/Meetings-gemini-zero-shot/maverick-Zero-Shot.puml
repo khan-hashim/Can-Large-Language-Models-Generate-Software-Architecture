@@ -1,0 +1,29 @@
+@startuml
+package "Community Meeting Management Platform" {
+
+  [Web Frontend] as WebFrontend
+  [API Gateway] as APIGateway
+  [User Management Service] as UserManagementService
+  [Meeting Group Service] as MeetingGroupService
+  [Meeting Management Service] as MeetingManagementService
+  [Payment Service] as PaymentService
+  [Database] as Database
+
+  WebFrontend --> APIGateway
+  APIGateway --> UserManagementService
+  APIGateway --> MeetingGroupService
+  APIGateway --> MeetingManagementService
+  APIGateway --> PaymentService
+
+  UserManagementService --> Database
+  MeetingGroupService --> Database
+  MeetingGroupService --> UserManagementService
+  MeetingGroupService --> PaymentService
+
+  MeetingManagementService --> Database
+  MeetingManagementService --> MeetingGroupService
+  MeetingManagementService --> PaymentService
+
+  PaymentService --> Database
+}
+@enduml

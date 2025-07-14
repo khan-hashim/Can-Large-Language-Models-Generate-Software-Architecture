@@ -1,0 +1,26 @@
+@startuml
+
+package MeetingManagementPlatform {
+    [Registrations] as Registrations
+    [Meeting Groups] as MeetingGroupMgmt
+    [Meetings] as MeetingMgmt
+    [Proposal Management] as ProposalMgmt
+    [Payments] as PaymentGateway
+    [Payment Subsystem] as PaymentSubsystem
+    [Auth] as Auth
+    [Meeting Service] as MeetingService
+    [Frontend] as WebInterface
+
+    WebInterface --> MeetingService
+    MeetingService --> Auth
+    MeetingService --> Registrations
+    MeetingService --> ProposalMgmt
+    MeetingService --> MeetingGroupMgmt
+    MeetingService --> MeetingMgmt
+    ProposalMgmt --> MeetingGroupMgmt
+    MeetingGroupMgmt --> PaymentGateway
+    MeetingMgmt --> PaymentGateway
+    PaymentGateway --> PaymentSubsystem
+    Auth --> Registrations
+}
+@enduml

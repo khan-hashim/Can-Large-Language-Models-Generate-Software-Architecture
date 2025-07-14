@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+    [Frontend] as Frontend
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Order] as Order
+    [Payment] as Payment
+    [Shipping] as Shipping
+    [Currency] as Currency
+    [Recommendation] as Recommendation
+    [Ads] as Ads
+    [Notification] as Notification
+    [Message Queue] as MQ
+
+    Frontend --> Catalog
+    Frontend --> Cart
+    Frontend --> Currency
+    Frontend --> Recommendation
+    Frontend --> Ads
+    Frontend --> Order  ' Added direct interaction for order management
+
+    Cart --> Catalog
+
+    Order --> Cart
+    Order --> Payment
+    Order --> Shipping
+    Order --> Notification  ' Direct notification for order status
+    Order --> MQ  ' Order updates through MQ
+
+    Payment --> MQ  ' Payment result notification through MQ
+    Payment --> Currency  ' Currency conversion for transactions
+
+    Shipping --> MQ  ' Shipping updates through MQ
+
+    Recommendation --> Cart
+    Recommendation --> Catalog
+
+    Notification <-- MQ  ' Notification receives updates from MQ
+
+    Catalog --> Currency
+
+    Ads --> Recommendation  ' Optional: Ads personalized based on recommendations logic
+}
+
+@enduml

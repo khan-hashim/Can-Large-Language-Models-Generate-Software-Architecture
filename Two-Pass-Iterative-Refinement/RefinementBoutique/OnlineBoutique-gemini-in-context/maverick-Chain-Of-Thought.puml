@@ -1,0 +1,39 @@
+@startuml
+package ECommercePlatform {
+  [Frontend] as Frontend
+  [Product Service] as ProductSvc
+  [Cart Service] as CartSvc
+  [Order Service] as OrderSvc
+  [Payment Service] as PaymentSvc
+  [Shipping Service] as ShippingSvc
+  [Currency Conversion Service] as CurrencySvc
+  [Recommendation Service] as RecommendationSvc
+  [Advertisement Service] as AdsSvc
+  [Email Service] as EmailSvc
+  [Session Manager] as SessionManager
+
+  ' User interactions via Frontend'
+  Frontend --> ProductSvc : Browses products, views details
+  Frontend --> CartSvc : Manages cart items (add, delete, edit)
+  Frontend --> OrderSvc : Initiates checkout process
+  Frontend --> CurrencySvc : Displays converted currency amounts
+  Frontend --> RecommendationSvc : Fetches personalized recommendations
+  Frontend --> AdsSvc : Requests contextual advertisements
+  Frontend --> SessionManager : Manages user sessions
+  Frontend --> ShippingSvc : Gets shipping estimates
+
+  ' Order processing flow'
+  OrderSvc --> CartSvc : Retrieves cart contents for order
+  OrderSvc --> PaymentSvc : Coordinates payment processing
+  OrderSvc --> ShippingSvc : Arranges shipping based on order
+  OrderSvc --> EmailSvc : Sends order confirmation emails
+
+  ' Internal service dependencies'
+  ProductSvc --> CurrencySvc : Converts product prices for internal use/storage (optional, or Frontend handles display conversion)
+  RecommendationSvc --> ProductSvc : Retrieves product data for recommendations
+  RecommendationSvc --> CartSvc : Uses cart contents for personalized recommendations
+
+  ' Data flow and utility services'
+  SessionManager --> Frontend : Provides session management capabilities
+}
+@enduml

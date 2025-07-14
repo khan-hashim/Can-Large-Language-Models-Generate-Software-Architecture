@@ -1,0 +1,57 @@
+@startuml
+'Community Meeting Management Platform - Corrected High-level Architecture
+skinparam componentStyle rectangle
+
+' --- Core Components ---
+[Frontend] as WebClient
+[API Gateway] as APIGateway
+[Identity Service] as IdentityService
+[Group Service] as GroupService
+[Meeting Service] as MeetingService
+[Payment Service] as PaymentService
+[Notification Service] as NotificationService
+
+' --- External Services ---
+[Payment Gateway] as PaymentGateway
+[Message Broker / Event Bus] as EventBus
+[Email Service Provider] as EmailProvider
+
+' --- Dedicated Databases for Services ---
+database "Identity Database" as IdentityDB
+database "Group Database" as GroupDB
+database "Meeting Database" as MeetingDB
+database "Payment Database" as PaymentDB
+
+' --- Connections ---
+
+' Frontend interaction
+WebClient --> APIGateway
+
+' API Gateway routes requests to core services
+APIGateway --> IdentityService
+APIGateway --> GroupService
+APIGateway --> MeetingService
+
+' Services own their data
+IdentityService --> IdentityDB
+GroupService --> GroupDB
+MeetingService --> MeetingDB
+PaymentService --> PaymentDB
+
+' Inter-Service Communication
+MeetingService --> GroupService
+MeetingService --> PaymentService
+
+' Payment Flow & Event-Driven Subscription Status
+PaymentService --> PaymentGateway
+PaymentService --> EventBus
+GroupService --> EventBus
+
+' Notification Flow
+PaymentService --> NotificationService
+GroupService --> NotificationService
+MeetingService --> NotificationService
+
+NotificationService --> EmailProvider
+
+@enduml

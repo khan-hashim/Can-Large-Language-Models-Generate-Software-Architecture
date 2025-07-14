@@ -1,0 +1,50 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-toolkit-jetbrains/master/resources/icons/aws.puml
+
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[API] as API
+[Catalog] as Catalog
+[Cart] as Cart
+[Checkout] as Checkout
+[Payment] as Payment
+[Shipping] as Shipping
+[Currency] as Currency
+[Recommendation] as Recommendation
+[Ads] as Ads
+[Notification] as Notification
+[SessionManagement] as SessionManagement
+
+database "ProductsDB" as ProductsDB
+database "Cart Database" as CartDB
+database "OrderDB" as OrderDB
+database "User Session Database" as SessionDB
+
+Frontend --> API
+API --> Catalog
+API --> Cart
+API --> Checkout
+API --> Recommendation
+API --> Ads
+API --> SessionManagement
+
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Notification
+Checkout --> OrderDB
+Checkout --> Cart
+
+Catalog --> ProductsDB
+Cart --> CartDB
+SessionManagement --> SessionDB
+Payment --> OrderDB
+Shipping --> OrderDB
+
+Catalog --> Currency
+
+Recommendation --> Cart
+Recommendation --> Catalog
+}
+
+@enduml

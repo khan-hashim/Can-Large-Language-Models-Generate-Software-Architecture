@@ -1,0 +1,65 @@
+@startuml
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[CatalogService] as Catalog
+[CartService] as Cart
+[CheckoutService] as Checkout
+[OrderService] as Order
+[PaymentGateway] as Payment
+[ShippingEstimator] as Shipping
+[CurrencyConverter] as Currency
+[RecommendationEngine] as Recommendation
+[AdsService] as Ads
+[NotificationService] as Email
+[SessionManager] as Session
+[UserLocationResolver] as Location
+[ExternalPaymentProvider] as ExternalPayment
+[ExternalExchangeAPI] as ExchangeAPI
+
+' User Interface
+Frontend --> Catalog
+Frontend --> Cart
+Frontend --> Recommendation
+Frontend --> Ads
+Frontend --> Checkout
+Frontend --> Currency
+Frontend --> Session
+
+' Catalog and Cart interactions
+Cart --> Catalog
+Cart --> Session
+
+' Recommendation uses Catalog
+Recommendation --> Catalog
+Recommendation --> Cart
+
+' Ads use Catalog context
+Ads --> Catalog
+
+' Checkout orchestration
+Checkout --> Cart
+Checkout --> Order
+Checkout --> Currency
+Checkout --> Location
+
+' OrderService does the core logic
+Order --> Payment
+Order --> Shipping
+Order --> Email
+
+' Email and currency use external APIs
+Email --> NotificationService
+Currency --> ExchangeAPI
+
+' Payment system calls external provider
+Payment --> ExternalPayment
+
+' Shipping estimator depends on location and catalog
+Shipping --> Catalog
+Shipping --> Location
+
+' Location based on session/user IP
+Location --> Session
+}
+@enduml

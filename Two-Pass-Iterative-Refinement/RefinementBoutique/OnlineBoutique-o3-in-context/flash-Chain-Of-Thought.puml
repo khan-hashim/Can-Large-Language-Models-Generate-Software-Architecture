@@ -1,0 +1,76 @@
+@startuml
+package ECommercePlatform {
+
+[Frontend Web UI] as Frontend
+[REST API Gateway] as API
+[Product Catalog Service] as Catalog
+[Shopping Cart Service] as Cart
+[Checkout Service] as Checkout
+[Order Management Service] as OrderService
+[Payment Service] as Payment
+[Shipping Service] as Shipping
+[Currency Conversion Service] as CurrencyService
+[Recommendation Engine] as Recommendation
+[Ad Service] as Ads
+[Notification Service] as Notification
+[Session Management Service] as SessionManagement
+
+[External Payment Gateway] as PaymentGateway
+[Email Service Provider] as EmailService
+[Exchange Rate API] as ExchangeRateAPI
+
+database "Products DB" as ProductsDB
+database "Cart DB" as CartDB
+database "Orders DB" as OrderDB
+database "User Session DB" as SessionDB
+
+' Frontend interactions
+Frontend --> API
+
+' API delegates to services
+API --> Catalog
+API --> Cart
+API --> Checkout
+API --> Recommendation
+API --> Ads
+API --> SessionManagement
+API --> CurrencyService
+
+' Cart and Catalog use DBs
+Catalog --> ProductsDB
+Cart --> CartDB
+
+' Session management
+SessionManagement --> SessionDB
+
+' Checkout flow
+Checkout --> Cart
+Checkout --> OrderService
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Notification
+
+' Order management
+OrderService --> OrderDB
+
+' Payment and shipping
+Payment --> PaymentGateway
+Payment --> OrderDB
+Shipping --> OrderDB
+
+' Notifications
+Notification --> EmailService
+
+' Currency conversion
+CurrencyService --> ExchangeRateAPI
+
+' Recommendations use Cart & Catalog
+Recommendation --> Cart
+Recommendation --> Catalog
+
+' Ads use Catalog context
+Ads --> Catalog
+
+}
+
+@enduml

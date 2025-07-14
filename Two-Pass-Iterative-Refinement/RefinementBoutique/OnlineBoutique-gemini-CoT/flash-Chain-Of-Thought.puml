@@ -1,0 +1,60 @@
+@startuml
+
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[API] as API
+[Catalog] as Catalog
+[Cart] as Cart
+[Checkout] as Checkout
+[Order Service] as OrderService
+[Payment] as Payment
+[Shipping] as Shipping
+[Currency] as Currency
+[Recommendation] as Recommendation
+[Ads] as Ads
+[Notification] as Notification
+[SessionManagement] as SessionManagement
+
+database "ProductsDB" as ProductsDB
+database "Cart Database" as CartDB
+database "OrderDB" as OrderDB
+database "User Session Database" as SessionDB
+
+[External Payment Gateway] as ExtPaymentGateway
+[External Shipping Carrier API] as ExtShippingAPI
+[External Email Service] as ExtEmailService
+
+Frontend --> API
+API --> Catalog
+API --> Cart
+API --> Checkout
+API --> Recommendation
+API --> Ads
+API --> SessionManagement
+API --> Currency
+
+Checkout --> Cart
+Checkout --> OrderService
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Notification
+
+Payment --> OrderService
+Payment --> ExtPaymentGateway
+
+Shipping --> OrderService
+Shipping --> ExtShippingAPI
+
+Notification --> ExtEmailService
+
+Catalog --> ProductsDB
+Cart --> CartDB
+OrderService --> OrderDB
+SessionManagement --> SessionDB
+
+Recommendation --> Cart
+Recommendation --> Catalog
+}
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+package ECommercePlatform {
+    [Frontend] as Frontend
+    [Products Service] as ProductService
+    [Session Management] as SessionManagement
+    [Cart Management] as CartManagement
+    [Order Management] as OrderManagement
+    [Payment Processing] as PaymentProcessing
+    [Shipping Estimator] as ShippingEstimator
+    [Currency Converter] as CurrencyConverter
+    [Recommendation Engine] as RecommendationEngine
+    [Ad Display] as AdDisplay
+    [Email Service] as EmailService
+
+    Frontend --> ProductService : Fetch products
+    Frontend --> SessionManagement : Manage user session
+    SessionManagement --> CartManagement : Store cart contents
+    Frontend --> CartManagement : Add/remove items
+    CartManagement --> OrderManagement : Prepare order
+    OrderManagement --> PaymentProcessing : Process payment
+    OrderManagement --> ShippingEstimator : Estimate shipping
+    OrderManagement --> CurrencyConverter : Convert currency
+    PaymentProcessing --> OrderManagement : Payment result
+    ShippingEstimator --> OrderManagement : Shipping estimate
+    CurrencyConverter --> ProductService : Convert product prices
+    Frontend --> RecommendationEngine : Fetch recommendations
+    RecommendationEngine --> ProductService : Analyze products
+    Frontend --> AdDisplay : Display ads
+    OrderManagement --> EmailService : Send order confirmation
+}
+@enduml

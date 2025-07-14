@@ -1,0 +1,58 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+
+  [Frontend] as Frontend
+  [Session Service] as Session
+  [Catalog Service] as Catalog
+  [Cart Service] as Cart
+  [Order Service] as Order
+  [Payment Service] as Payment
+  [Payment Gateway] as PaymentGateway
+  [Shipping Service] as Shipping
+  [Currency Service] as Currency
+  [Recommendation Service] as Recommendation
+  [Ads Service] as Ads
+  [Notification Service] as Notification
+  [Message Queue] as MQ
+  database "Catalog DB" as CatalogDB
+  database "Cart DB" as CartDB
+  database "Order DB" as OrderDB
+
+  Frontend --> Session : Manage sessions
+  Frontend --> Catalog : Browse products
+  Frontend --> Cart : Manage cart (linked to session)
+  Frontend --> Recommendation : Get personalized recommendations
+  Frontend --> Ads : Get contextual ads
+  Frontend --> Currency : Display currency options & rates
+
+  Session --> Cart : Associate carts with sessions
+  Cart --> Catalog : Validate product details & availability
+  Cart --> CartDB : Store cart data
+
+  Catalog --> CatalogDB : Read/write product info
+  Order --> Cart : Retrieve cart contents
+  Order --> OrderDB : Store orders
+  Order --> MQ : Publish order events
+
+  MQ --> Payment : Consume order events
+  Payment --> PaymentGateway : Process payment via multiple methods
+  Payment --> MQ : Publish payment result events
+
+  MQ --> Shipping : Consume order events & payment results
+  Shipping --> Catalog : Get product details for shipping
+  Shipping --> Currency : Convert shipping cost
+  Shipping --> MQ : Publish shipping events
+
+  MQ --> Notification : Consume events (order, payment, shipping)
+  Notification --> Frontend : Send order confirmation emails
+
+  Recommendation --> Cart : Analyze current cart contents
+  Recommendation --> Catalog : Access product data
+
+}
+
+center footer PlantUML Component Diagram - E-Commerce Platform (Corrected)
+
+@enduml

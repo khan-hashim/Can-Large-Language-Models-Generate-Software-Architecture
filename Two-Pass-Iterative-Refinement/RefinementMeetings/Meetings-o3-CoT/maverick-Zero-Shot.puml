@@ -1,0 +1,40 @@
+@startuml
+package MeetingManagementPlatform {
+  [Frontend] as WebInterface
+  [Backend API] as BackendAPI
+  [Authentication & Roles] as Auth
+  [Group Proposals] as GroupProposalMgmt
+  [Approved Groups] as ApprovedGroupMgmt
+  [Group Membership] as MembershipMgmt
+  [Meetings] as MeetingMgmt
+  [Payments] as PaymentSubsystem
+  [Payment Validator] as PaymentValidator
+
+  ' Frontend interacts only with backend
+  WebInterface --> BackendAPI
+
+  ' BackendAPI routes to components
+  BackendAPI --> Auth
+  BackendAPI --> GroupProposalMgmt
+  BackendAPI --> ApprovedGroupMgmt
+  BackendAPI --> MembershipMgmt
+  BackendAPI --> MeetingMgmt
+  BackendAPI --> PaymentValidator
+  BackendAPI --> PaymentSubsystem
+
+  ' Group logic
+  GroupProposalMgmt --> Auth
+  GroupProposalMgmt --> ApprovedGroupMgmt
+  ApprovedGroupMgmt --> PaymentValidator
+  MembershipMgmt --> ApprovedGroupMgmt
+  MembershipMgmt --> Auth
+
+  ' Meetings are tied to approved groups and validated by payment
+  MeetingMgmt --> ApprovedGroupMgmt
+  MeetingMgmt --> MembershipMgmt
+  MeetingMgmt --> PaymentValidator
+
+  ' Payment validation uses payment system
+  PaymentValidator --> PaymentSubsystem
+}
+@enduml

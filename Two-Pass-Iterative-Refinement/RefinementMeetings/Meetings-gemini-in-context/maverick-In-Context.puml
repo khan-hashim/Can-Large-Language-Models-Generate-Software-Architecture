@@ -1,0 +1,25 @@
+@startuml
+package "Community Meeting Management Platform" {
+[User Management] as UserMgmt
+[Meeting Group Management] as MeetingGroupMgmt
+[Meeting Management] as MeetingMgmt
+[Payment Processing] as PaymentProcessing
+[Web Interface] as WebInterface
+
+WebInterface --> UserMgmt
+WebInterface --> MeetingGroupMgmt
+WebInterface --> MeetingMgmt
+WebInterface --> PaymentProcessing
+
+UserMgmt --> MeetingGroupMgmt
+UserMgmt --> MeetingMgmt
+
+MeetingGroupMgmt --> PaymentProcessing
+MeetingGroupMgmt --> MeetingMgmt
+
+MeetingMgmt --> PaymentProcessing
+
+PaymentProcessing --> MeetingGroupMgmt
+PaymentProcessing --> MeetingMgmt
+}
+@enduml

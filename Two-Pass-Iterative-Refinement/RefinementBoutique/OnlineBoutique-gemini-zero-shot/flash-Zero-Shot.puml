@@ -1,0 +1,59 @@
+@startuml
+!pragma layout smetana
+
+package "E-commerce Platform" {
+  [Frontend] as Frontend
+  [API Gateway] as API
+  [Product Catalog Service] as Catalog
+  [Shopping Cart Service] as Cart
+  [Checkout Orchestrator] as Checkout
+  [Payment Service] as Payment
+  [Shipping Service] as Shipping
+  [Currency Conversion Service] as Currency
+  [Recommendation Engine] as Recommendation
+  [Advertisement Service] as Ads
+  [Email Notification Service] as Email
+  [User Session Management] as SessionManagement
+  [Products Database] as ProductsDB
+  [Orders Database] as OrderDB
+  [User/Session Database] as UserDB
+
+  ' Frontend interactions via API Gateway'
+  Frontend --> API : Requests
+
+  ' API Gateway routes to various backend services '
+  API --> Catalog : Product browsing/details
+  API --> Cart : Cart management
+  API --> Checkout : Order initiation
+  API --> Recommendation : Get recommendations
+  API --> Ads : Fetch advertisements
+  API --> SessionManagement : Manage user sessions
+  API --> Currency : Convert currencies
+
+  ' Shopping Cart Service interactions '
+  Cart --> Catalog : Fetches product details for cart items
+  Cart --> SessionManagement : Links cart to user session
+
+  ' Checkout Orchestrator interactions '
+  Checkout --> Cart : Retrieves cart contents
+  Checkout --> Payment : Processes payment
+  Checkout --> Shipping : Arranges shipping
+  Checkout --> Email : Sends order confirmation
+  Checkout --> OrderDB : Stores order details
+  Checkout --> Catalog : Verifies product details/stock
+
+  ' Payment Service interactions '
+  Payment --> OrderDB : Updates order payment status
+
+  ' Recommendation Engine interactions '
+  Recommendation --> Cart : Analyzes cart contents
+  Recommendation --> Catalog : Fetches product data for recommendations
+
+  ' Data Storage '
+  Catalog --> ProductsDB : Accesses product data
+  SessionManagement --> UserDB : Manages session data
+  OrderDB <-- Checkout : Stores new orders
+  OrderDB <-- Payment : Updates payment status
+}
+
+@enduml

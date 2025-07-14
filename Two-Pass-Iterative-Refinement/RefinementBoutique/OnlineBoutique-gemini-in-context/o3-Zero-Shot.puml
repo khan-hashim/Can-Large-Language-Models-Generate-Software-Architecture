@@ -1,0 +1,71 @@
+@startuml
+package EcommercePlatform {
+
+  [User Browser] as User
+  [Frontend] as Frontend
+  [API Gateway] as API
+
+  [Catalog Service] as Catalog
+  [Cart Service] as Cart
+  [Recommendation Service] as Recommend
+  [Advertisement Service] as Ads
+  [Currency Conversion Service] as Currency
+  [Checkout Orchestration Service] as Checkout
+  [Order Management Service] as Order
+  [Payment Processing Service] as Payment
+  [Shipping Management Service] as Shipping
+  [Email Notification Service] as Email
+  [Session Management Service] as SessionMgr
+
+  [Product Catalog DB] as ProductsDB
+  [Shopping Cart DB] as CartDB
+  [Order History DB] as OrderDB
+  [Currency Exchange Rate Cache] as CurrencyCache
+  [User Session DB] as SessionDB
+
+  [External Payment Gateway] as PaymentGateway
+  [External Shipping Carrier API] as ShippingAPI
+  [External Exchange Rate API] as ExchangeRateAPI
+  [External Ad Network] as AdNet
+  [External SMTP Service] as SMTP
+
+  User --> Frontend : Browses, interacts
+  Frontend --> API : API requests
+  Frontend --> SessionMgr : Manages session (cookies/tokens)
+
+  API --> Catalog : Get product info
+  API --> Cart : Manage cart items
+  API --> Recommend : Get recommendations
+  API --> Ads : Get contextual ads
+  API --> Currency : Convert currency
+  API --> Checkout : Initiate checkout
+  API --> SessionMgr : Validate/retrieve session
+
+  Catalog --> ProductsDB : Reads/writes product data
+  Cart --> CartDB : Reads/writes cart data
+  Order --> OrderDB : Reads/writes order data
+  SessionMgr --> SessionDB : Reads/writes session data
+
+  Recommend --> Catalog : Gets product details for recommendations
+  Recommend --> Cart : Uses cart contents for recommendations
+
+  Ads --> AdNet : Fetches advertisements
+
+  Currency --> ExchangeRateAPI : Fetches real-time rates
+  Currency --> CurrencyCache : Caches exchange rates
+
+  Checkout --> Cart : Retrieves cart contents, clears cart
+  Checkout --> Order : Creates new order
+  Checkout --> Payment : Initiates payment
+  Checkout --> Shipping : Arranges shipping
+  Checkout --> Email : Sends confirmation email
+  Checkout --> Currency : Converts currency for order
+
+  Payment --> PaymentGateway : Processes payment
+  Payment --> Currency : Converts payment currency
+
+  Shipping --> ShippingAPI : Gets estimates, arranges delivery
+
+  Email --> SMTP : Sends emails
+}
+@enduml

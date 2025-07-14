@@ -1,0 +1,49 @@
+@startuml
+package CommunityMeetingPlatform {
+
+    [Frontend] as WebClient
+    [API Gateway] as APIGW
+    [User and Role Management Service] as UserRoleSvc
+    [Registration Service] as RegSvc
+    [Group Proposal Service] as ProposalSvc
+    [Group Management Service] as GroupSvc
+    [Meeting Management Service] as MeetingSvc
+    [Payment Processing Service] as PaySvc
+    [Payment Gateway Adapter] as PayAdapter
+    [External Payment Provider] as ExtPay
+    [Notification Service] as NotiSvc
+    [Events Bus] as EventBus
+    [Database] as DB
+
+    WebClient --> APIGW
+
+    APIGW --> UserRoleSvc
+    APIGW --> RegSvc
+    APIGW --> ProposalSvc
+    APIGW --> GroupSvc
+    APIGW --> MeetingSvc
+    APIGW --> PaySvc
+
+    RegSvc --> UserRoleSvc
+    ProposalSvc --> GroupSvc
+    GroupSvc --> PaySvc
+    MeetingSvc --> GroupSvc
+    MeetingSvc --> PaySvc
+
+    UserRoleSvc --> DB
+    RegSvc --> DB
+    ProposalSvc --> DB
+    GroupSvc --> DB
+    MeetingSvc --> DB
+    PaySvc --> DB
+
+    PaySvc --> PayAdapter
+    PayAdapter --> ExtPay
+
+    GroupSvc --> EventBus
+    MeetingSvc --> EventBus
+    ProposalSvc --> EventBus
+    PaySvc --> EventBus
+    EventBus --> NotiSvc
+}
+@enduml

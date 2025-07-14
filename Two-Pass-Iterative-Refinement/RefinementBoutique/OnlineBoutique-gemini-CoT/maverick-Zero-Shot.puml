@@ -1,0 +1,65 @@
+@startuml
+package "E-Commerce Platform" {
+
+    [Frontend] as Frontend
+    [Products Service] as ProductService
+    [Cart Service] as CartService
+    [Checkout Service] as CheckoutService
+    [Order Service] as OrderService
+    [Payment Service] as PaymentService
+    [Shipping Service] as ShippingService
+    [Currency Service] as CurrencyService
+    [Recommendation Service] as RecommendationService
+    [Ads Service] as AdsService
+    [Email Service] as EmailService
+
+    database "Product Database" as ProductDB
+    database "Cart Database" as CartDB
+    database "Order Database" as OrderDB
+
+    cloud "External Payment Gateway" as ExternalPaymentGateway
+    cloud "External Shipping Carrier API" as ExternalShippingAPI
+
+    ' Frontend interactions with core services and display services
+    Frontend --> ProductService : browses products, views details
+    Frontend --> CartService : manages cart items (add, delete, edit)
+    Frontend --> CheckoutService : initiates checkout process
+    Frontend --> RecommendationService : displays personalized recommendations
+    Frontend --> AdsService : displays contextual advertisements
+    Frontend --> CurrencyService : displays amounts in selected currency
+
+    ' Product Service interactions
+    ProductService --> ProductDB : retrieves/stores product data
+    ProductService --> CurrencyService : converts product prices for display
+
+    ' Cart Service interactions
+    CartService --> CartDB : retrieves/persists cart contents (including session management)
+
+    ' Checkout Service orchestration of order fulfillment
+    CheckoutService --> CartService : retrieves cart contents for order
+    CheckoutService --> OrderService : creates and persists the order
+    CheckoutService --> PaymentService : coordinates payment processing
+    CheckoutService --> ShippingService : coordinates shipping arrangements
+    CheckoutService --> EmailService : sends order confirmation email
+
+    ' Order Service interactions
+    OrderService --> OrderDB : retrieves/persists order details
+
+    ' Payment Service interactions with external gateway
+    PaymentService --> ExternalPaymentGateway : processes payment transactions
+
+    ' Shipping Service interactions with external API
+    ShippingService --> ExternalShippingAPI : gets quotes, tracks, arranges shipments
+
+    ' Recommendation Service interactions for personalized recommendations
+    RecommendationService --> CartService : gets current cart for personalization
+    RecommendationService --> ProductService : gets product details for recommendations
+
+    ' Ads Service (primarily provides content to Frontend)
+    ' AdsService could optionally interact with ProductService or other data sources for context
+    ' (No explicit connection needed if it's self-contained or data flow is implicit)
+
+    ' Currency Service (could be an external API or internal service with external data source)
+    ' It serves other services for real-time conversion.
+}
+@enduml

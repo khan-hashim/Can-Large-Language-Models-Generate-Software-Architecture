@@ -1,0 +1,34 @@
+@startuml
+package MeetingManagementPlatform {
+    [UserService] as UserService
+    [GroupService] as GroupService
+    [MeetingService] as MeetingService
+    [PaymentService] as PaymentService
+    [Frontend] as WebApp
+    [NotificationService] as NotificationService
+
+    ' Frontend interactions
+    WebApp --> UserService
+    WebApp --> GroupService
+    WebApp --> MeetingService
+    WebApp --> PaymentService
+
+    ' UserService provides user details & roles
+    GroupService --> UserService
+
+    ' Group proposal approval workflow
+    GroupService --> NotificationService
+    NotificationService --> UserService
+
+    ' Admin actions handled within GroupService (implicit)
+    WebApp --> GroupService
+
+    ' Meeting creation constraints
+    MeetingService --> GroupService
+    MeetingService --> PaymentService
+
+    ' Payment processing
+    PaymentService --> MeetingService
+    PaymentService --> GroupService
+}
+@enduml

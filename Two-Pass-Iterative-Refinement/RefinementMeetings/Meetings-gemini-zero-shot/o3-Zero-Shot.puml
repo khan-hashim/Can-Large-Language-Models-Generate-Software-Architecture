@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+
+package "Community Meeting Platform" {
+
+  [Web Client] as WebClient
+  [API Gateway] as ApiGateway
+
+  [Identity and Access Management Service] as IdentityService
+  [Group Proposal Service] as GroupProposalService
+  [Group Service] as GroupService
+  [Meeting Service] as MeetingService
+  [Payment Service] as PaymentService
+  [Notification Service] as NotificationService
+
+  [External Payment Gateway] as PaymentGateway
+
+  database "Identity DB" as IdentityDB
+  database "Group Proposal DB" as GroupProposalDB
+  database "Group Service DB" as GroupServiceDB
+  database "Meeting Service DB" as MeetingServiceDB
+  database "Payment Service DB" as PaymentServiceDB
+  database "Notification Service DB" as NotificationServiceDB
+
+  WebClient --> ApiGateway
+
+  ApiGateway --> IdentityService
+  ApiGateway --> GroupProposalService
+  ApiGateway --> GroupService
+  ApiGateway --> MeetingService
+  ApiGateway --> PaymentService
+  ApiGateway --> NotificationService
+
+  IdentityService --> IdentityDB
+  GroupProposalService --> GroupProposalDB
+  GroupService --> GroupServiceDB
+  MeetingService --> MeetingServiceDB
+  PaymentService --> PaymentServiceDB
+  NotificationService --> NotificationServiceDB
+
+  GroupProposalService --> GroupService
+  MeetingService --> GroupService
+  GroupService --> PaymentService
+  MeetingService --> PaymentService
+
+  PaymentService --> PaymentGateway
+  PaymentService --> GroupService
+  PaymentService --> NotificationService
+
+  GroupService --> NotificationService
+  MeetingService --> NotificationService
+
+}
+@enduml

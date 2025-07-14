@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
+<XMI.header>
+<XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+</XMI.header>
+<XMI.content>
+<UML:Model name="PlantUML" xmi.id="model1">
+<UML:Namespace.ownedElement>
+<UML:Component name="E-Commerce Platform" namespace="model1" xmi.id="ent0002">
+<UML:Classifier.feature/>
+<UML:Component name="Frontend" namespace="model1" xmi.id="ent0003">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Session Service" namespace="model1" xmi.id="ent0004">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Catalog Service" namespace="model1" xmi.id="ent0005">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Cart Service" namespace="model1" xmi.id="ent0006">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Order Service" namespace="model1" xmi.id="ent0007">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Payment Service" namespace="model1" xmi.id="ent0008">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Payment Gateway" namespace="model1" xmi.id="ent0009">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Shipping Service" namespace="model1" xmi.id="ent0010">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Currency Service" namespace="model1" xmi.id="ent0011">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Recommendation Service" namespace="model1" xmi.id="ent0012">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Ads Service" namespace="model1" xmi.id="ent0013">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Notification Service" namespace="model1" xmi.id="ent0014">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Message Queue" namespace="model1" xmi.id="ent0015">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Catalog DB" namespace="model1" xmi.id="ent0016">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Cart DB" namespace="model1" xmi.id="ent0017">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Order DB" namespace="model1" xmi.id="ent0018">
+<UML:Classifier.feature/>
+</UML:Component>
+</UML:Component>
+<UML:Association name="Manage sessions" namespace="model1" xmi.id="ass43">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass43" type="ent0003" xmi.id="end44">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass43" type="ent0004" xmi.id="end45">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Browse products" namespace="model1" xmi.id="ass46">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass46" type="ent0003" xmi.id="end47">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass46" type="ent0005" xmi.id="end48">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Manage cart (linked to session)" namespace="model1" xmi.id="ass49">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass49" type="ent0003" xmi.id="end50">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass49" type="ent0006" xmi.id="end51">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Get personalized recommendations" namespace="model1" xmi.id="ass52">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass52" type="ent0003" xmi.id="end53">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass52" type="ent0012" xmi.id="end54">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Get contextual ads" namespace="model1" xmi.id="ass55">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass55" type="ent0003" xmi.id="end56">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass55" type="ent0013" xmi.id="end57">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Display currency options &amp; rates" namespace="model1" xmi.id="ass58">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass58" type="ent0003" xmi.id="end59">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass58" type="ent0011" xmi.id="end60">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Associate carts with sessions" namespace="model1" xmi.id="ass61">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass61" type="ent0004" xmi.id="end62">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass61" type="ent0006" xmi.id="end63">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Validate product details &amp; availability" namespace="model1" xmi.id="ass64">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass64" type="ent0006" xmi.id="end65">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass64" type="ent0005" xmi.id="end66">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Store cart data" namespace="model1" xmi.id="ass67">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass67" type="ent0006" xmi.id="end68">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass67" type="ent0017" xmi.id="end69">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Read/write product info" namespace="model1" xmi.id="ass70">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass70" type="ent0005" xmi.id="end71">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass70" type="ent0016" xmi.id="end72">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Retrieve cart contents" namespace="model1" xmi.id="ass73">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass73" type="ent0007" xmi.id="end74">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass73" type="ent0006" xmi.id="end75">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Store orders" namespace="model1" xmi.id="ass76">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass76" type="ent0007" xmi.id="end77">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass76" type="ent0018" xmi.id="end78">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Publish order events" namespace="model1" xmi.id="ass79">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass79" type="ent0007" xmi.id="end80">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass79" type="ent0015" xmi.id="end81">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Consume order events" namespace="model1" xmi.id="ass82">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass82" type="ent0015" xmi.id="end83">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass82" type="ent0008" xmi.id="end84">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Process payment via multiple methods" namespace="model1" xmi.id="ass85">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass85" type="ent0008" xmi.id="end86">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass85" type="ent0009" xmi.id="end87">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Publish payment result events" namespace="model1" xmi.id="ass88">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass88" type="ent0008" xmi.id="end89">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass88" type="ent0015" xmi.id="end90">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Consume order events &amp; payment results" namespace="model1" xmi.id="ass91">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass91" type="ent0015" xmi.id="end92">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass91" type="ent0010" xmi.id="end93">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Get product details for shipping" namespace="model1" xmi.id="ass94">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass94" type="ent0010" xmi.id="end95">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass94" type="ent0005" xmi.id="end96">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Convert shipping cost" namespace="model1" xmi.id="ass97">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass97" type="ent0010" xmi.id="end98">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass97" type="ent0011" xmi.id="end99">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Publish shipping events" namespace="model1" xmi.id="ass100">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass100" type="ent0010" xmi.id="end101">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass100" type="ent0015" xmi.id="end102">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Consume events (order, payment, shipping)" namespace="model1" xmi.id="ass103">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass103" type="ent0015" xmi.id="end104">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass103" type="ent0014" xmi.id="end105">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Send order confirmation emails" namespace="model1" xmi.id="ass106">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass106" type="ent0014" xmi.id="end107">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass106" type="ent0003" xmi.id="end108">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Analyze current cart contents" namespace="model1" xmi.id="ass109">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass109" type="ent0012" xmi.id="end110">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass109" type="ent0006" xmi.id="end111">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="Access product data" namespace="model1" xmi.id="ass112">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass112" type="ent0012" xmi.id="end113">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass112" type="ent0005" xmi.id="end114">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+</UML:Namespace.ownedElement>
+</UML:Model>
+</XMI.content>
+</XMI>

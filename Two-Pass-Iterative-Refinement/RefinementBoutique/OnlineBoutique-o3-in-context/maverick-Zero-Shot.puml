@@ -1,0 +1,41 @@
+@startuml
+package ECommercePlatform {
+[Frontend] as Frontend
+[Products Service] as ProductService
+[Cart Service] as Cart
+[Checkout Service] as Checkout
+[Payment Service] as Payment
+[Shipping Service] as Shipping
+[Currency Service] as Currency
+[Recommendation Service] as Recommendation
+[Ads Service] as Ads
+[Email Service] as Email
+
+' User browsing product catalog
+Frontend --> ProductService
+
+' User managing shopping cart
+Frontend --> Cart
+Cart --> ProductService ' To validate product info / availability
+
+' Checkout flow
+Frontend --> Checkout
+Checkout --> Cart ' Retrieve cart contents
+Checkout --> Payment ' Process payment
+Checkout --> Shipping ' Calculate shipping cost and arrange delivery
+Checkout --> Currency ' Get currency conversion for pricing
+Checkout --> Email ' Send confirmation email
+
+' Real-time currency conversion for product display and checkout
+ProductService --> Currency
+Frontend --> Currency
+
+' Personalization and user engagement
+Frontend --> Recommendation ' Show personalized product recommendations
+Frontend --> Ads ' Display contextual advertisements
+Checkout --> Ads ' Possibly show ads/offers during checkout
+
+' Session management assumed handled within Frontend or a session middleware (not shown explicitly)
+}
+
+@enduml

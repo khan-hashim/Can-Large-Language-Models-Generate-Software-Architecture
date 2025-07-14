@@ -1,0 +1,36 @@
+@startuml
+package ECommercePlatform {
+[Frontend]
+[Checkout]
+[Cart]
+[Cache] as Cache
+[Ads]
+[Recommendation]
+[Catalog]
+[ProductsDB]
+[Shipping]
+[Currency]
+[Payment]
+[Email]
+
+Frontend --> Ads
+Frontend --> Recommendation
+Frontend --> Catalog
+Frontend --> Cart
+Frontend --> Checkout
+Frontend --> Shipping
+Frontend --> Currency
+Frontend --> Payment
+Frontend --> Email
+
+Recommendation --> Catalog
+Catalog --> ProductsDB
+Cart --> cache
+Checkout --> Catalog
+Checkout --> Cart
+Checkout --> Shipping
+Checkout --> Currency
+Checkout --> Payment
+Checkout --> Email
+}
+@enduml

@@ -1,0 +1,64 @@
+@startuml
+package EcommercePlatform {
+
+    [User Browser] as User
+    [Frontend] as Frontend
+    [API] as API
+
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Recommendation] as Recommend
+    [Ads] as Ads
+    [Currency Converter] as Currency
+    [Checkout Orchestrator] as Checkout
+    [Order] as Order
+    [Payment Processor] as Payment
+    [Shipping Coordinator] as Shipping
+    [Email Service] as Email
+
+    [Catalog DB] as ProductsDB
+    [Cart DB] as CartDB
+    [Order DB] as OrderDB
+    [Currency Cache] as CurrencyCache
+
+    [Shipping Carrier API] as ShippingAPI
+    [Exchange Rate API] as ExchangeAPI
+    [Ad Network] as AdNet
+    [SMTP / Email] as SMTP
+
+    User --> Frontend
+    Frontend --> API
+
+    API --> Catalog
+    API --> Cart
+    API --> Recommend
+    API --> Ads
+    API --> Currency
+    API --> Checkout
+
+    Catalog --> ProductsDB
+    Cart --> CartDB
+    Order --> OrderDB
+
+    Recommend --> Catalog
+    Recommend --> Cart
+
+    Ads --> AdNet
+
+    Currency --> CurrencyCache
+    Currency --> ExchangeAPI
+
+    Checkout --> Order
+    Checkout --> Payment
+    Checkout --> Shipping
+    Checkout --> Email
+
+    Payment --> Payment
+    Payment --> Currency
+
+    Shipping --> ShippingAPI
+    Email --> SMTP
+
+    Cart --> Order
+}
+@enduml

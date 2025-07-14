@@ -1,0 +1,48 @@
+@startuml
+
+package "Community Meeting Management Platform" {
+
+[Frontend] as WebUI
+[API Gateway] as APIGateway
+
+package "Services" {
+[Registrations Service] as Registrations
+[Meeting Group Service] as GroupService
+[Meetings Service] as MeetingService
+[Payment Service] as PaymentService
+[Notification Service] as NotificationService
+}
+
+package "Data Stores" {
+database [Registrations DB] as RegistrationsDB
+database [Group DB] as GroupDB
+database [Meetings DB] as MeetingDB
+database [Payments DB] as PaymentDB
+}
+
+[External Payment Gateway] as PaymentGateway
+
+' Connections
+WebUI --> APIGateway
+APIGateway --> Registrations
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+
+Registrations --> RegistrationsDB
+GroupService --> GroupDB
+MeetingService --> MeetingDB
+PaymentService --> PaymentDB
+PaymentService --> PaymentGateway
+
+NotificationService --> Registrations
+MeetingService --> NotificationService
+
+GroupService --> Registrations
+MeetingService --> Registrations
+
+' FIX: Added explicit connection for payment enforcement
+MeetingService --> PaymentService
+}
+
+@enduml

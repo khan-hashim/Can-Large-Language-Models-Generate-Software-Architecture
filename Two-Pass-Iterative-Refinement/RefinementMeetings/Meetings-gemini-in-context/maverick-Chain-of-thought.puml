@@ -1,0 +1,98 @@
+@startuml
+!theme toy
+
+rectangle "User" as User
+rectangle "Administrator" as Admin
+
+package "Frontend Layer" {
+  [Web Application (UI)] as WebApp
+  [Admin Dashboard (UI)] as AdminUI
+}
+
+package "API Gateway" {
+  [API Gateway] as APIGateway
+}
+
+package "Backend Services" {
+  [Authentication & Authorization Service] as AuthService
+  [User Service] as UserService
+  [Meeting Group Service] as GroupService
+  [Meeting Service] as MeetingService
+  [Payment Service] as PaymentService
+  [Notification Service] as NotificationService
+}
+
+package "Data Layer" {
+  database "User DB" as UserDB
+  database "Meeting Group DB" as GroupDB
+  database "Meeting DB" as MeetingDB
+  database "Payment DB" as PaymentDB
+}
+
+package "External Services" {
+  rectangle "Payment Gateway" as PaymentGateway
+  rectangle "Email/SMS Provider" as CommProvider
+}
+
+package "Infrastructure" {
+  queue "Message Queue" as MessageQueue
+  component "Logging & Monitoring" as Monitoring
+}
+
+' User Interactions '
+User --> WebApp
+Admin --> AdminUI
+
+' Frontend to API Gateway '
+WebApp --> APIGateway
+AdminUI --> APIGateway
+
+' API Gateway to Backend Services '
+APIGateway --> AuthService
+APIGateway --> UserService
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+
+' Backend Service Interactions '
+AuthService --> UserService
+UserService --> UserDB
+
+GroupService --> UserDB
+GroupService --> GroupDB
+GroupService --> MessageQueue
+GroupService --> PaymentService
+
+MeetingService --> GroupDB
+MeetingService --> MeetingDB
+MeetingService --> PaymentService
+MeetingService --> MessageQueue
+
+PaymentService --> PaymentDB
+PaymentService --> PaymentGateway
+PaymentService --> MessageQueue
+
+' Asynchronous Processing and Notifications '
+MessageQueue --> AdminUI
+MessageQueue --> NotificationService
+NotificationService --> CommProvider
+
+' Data Persistence '
+AuthService ..> UserDB
+UserService ..> UserDB
+GroupService ..> GroupDB
+MeetingService ..> MeetingDB
+PaymentService ..> PaymentDB
+
+' Cross-cutting Concerns '
+[*] -right-> Monitoring
+APIGateway --> Monitoring
+AuthService --> Monitoring
+UserService --> Monitoring
+GroupService --> Monitoring
+MeetingService --> Monitoring
+PaymentService --> Monitoring
+NotificationService --> Monitoring
+MessageQueue --> Monitoring
+
+@enduml

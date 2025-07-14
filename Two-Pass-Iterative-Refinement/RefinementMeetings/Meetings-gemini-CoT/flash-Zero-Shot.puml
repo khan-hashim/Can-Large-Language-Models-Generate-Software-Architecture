@@ -1,0 +1,54 @@
+@startuml
+package "Community Meeting Platform" {
+    [Frontend] as WebUI
+    [API Gateway] as APIGateway
+
+    package "User Services" {
+        [Registrations Service] as Registrations
+        [Registration Database] as RegistrationDB
+        Registrations --> RegistrationDB
+    }
+
+    package "Group Management Services" {
+        [Meeting Group Management Service] as GroupManagement
+        [Group Management Database] as GroupManagementDB
+        GroupManagement --> GroupManagementDB
+    }
+
+    package "Meeting Services" {
+        [Meetings Service] as MeetingManagement
+        [Meeting Management Database] as MeetingManagementDB
+        MeetingManagement --> MeetingManagementDB
+    }
+
+    package "Administration Services" {
+        [Administration Service] as Administration
+        [Administration Database] as AdministrationDB
+        Administration --> AdministrationDB
+    }
+
+    package "Payment Services" {
+        [Payment Integration Service] as PaymentIntegration
+        [Payment Integration Database] as PaymentDB
+        [Payment Gateway] as PaymentGateway
+
+        PaymentIntegration --> PaymentDB
+        PaymentIntegration --> PaymentGateway
+    }
+
+    WebUI --> APIGateway
+    APIGateway --> Registrations
+    APIGateway --> GroupManagement
+    APIGateway --> MeetingManagement
+    APIGateway --> Administration
+    APIGateway --> PaymentIntegration
+
+    GroupManagement --> PaymentIntegration
+    MeetingManagement --> PaymentIntegration
+    MeetingManagement --> PaymentIntegration
+
+    Administration --> Registrations
+    Administration --> GroupManagement
+}
+
+@enduml

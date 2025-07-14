@@ -1,0 +1,84 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+
+    rectangle "External Services" {
+        [Payment Gateway] as PaymentGateway
+        [Shipping Provider API] as ShippingProvider
+        [Email Service] as EmailService
+        [Currency Exchange API] as CurrencyAPI
+        [Ad Network] as AdNetwork
+    }
+
+    cloud "Infrastructure" {
+        [Message Queue] as MQ
+        [Database] as DB
+    }
+
+    [Frontend] as Frontend
+    [Catalog Service] as Catalog
+    [Cart Service] as Cart
+    [Order Service] as Order
+    [Payment Service] as Payment
+    [Shipping Service] as Shipping
+    [Currency Service] as Currency
+    [Recommendation Service] as Recommendation
+    [Ads Service] as Ads
+    [Notification Service] as Notification
+
+    ' Frontend Interactions
+    Frontend --> Catalog : Browses Products
+    Frontend --> Cart : Manages Cart
+    Frontend --> Currency : Displays Prices
+    Frontend --> Recommendation : Shows Recommendations
+    Frontend --> Ads : Shows Ads
+    Frontend <--> DB : Manages Sessions
+
+    ' Catalog Service Interactions
+    Catalog <--> DB : Stores/Retrieves Products
+    Catalog --> Currency : For Price Conversion
+
+    ' Cart Service Interactions
+    Cart <--> DB : Stores/Retrieves Cart Items
+    Cart --> Catalog : Gets Product Details
+
+    ' Order Service Interactions (Orchestration)
+    Order <--> DB : Stores/Retrieves Orders
+    Order --> Cart : Retrieves Cart Contents
+    Order --> Payment : Initiates Payment
+    Order --> Shipping : Initiates Shipping
+    Order --> MQ : Publishes OrderPlacedEvent
+    Order <--- MQ : Consumes Payment/Shipping Status
+
+    ' Payment Service Interactions
+    Payment <--> DB : Stores Payment Details
+    Payment --> PaymentGateway : Processes Payments
+    Payment --> MQ : Publishes PaymentStatusEvent
+
+    ' Shipping Service Interactions
+    Shipping <--> DB : Stores Shipping Details
+    Shipping --> ShippingProvider : Arranges Shipping
+    Shipping --> MQ : Publishes ShippingStatusEvent
+
+    ' Currency Service Interactions
+    Currency --> CurrencyAPI : Fetches Exchange Rates
+
+    ' Recommendation Service Interactions
+    Recommendation --> Cart : Uses Cart Contents
+    Recommendation --> Catalog : Fetches Product Info
+    Recommendation <--> DB : (User History/Product Views)
+
+    ' Ads Service Interactions
+    Ads --> AdNetwork : Fetches Advertisements
+    Ads <--> DB : (Ad Content/Tracking)
+
+    ' Notification Service Interactions
+    Notification <--- MQ : Consumes Events
+    Notification --> EmailService : Sends Emails
+
+}
+
+center footer PlantUML Component Diagram - E-Commerce Platform
+
+@enduml

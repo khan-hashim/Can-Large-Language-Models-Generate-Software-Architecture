@@ -1,0 +1,52 @@
+@startuml
+'Community Meeting Management Platform - High-level components
+skinparam componentStyle rectangle
+
+[Frontend] as WebClient
+[API Gateway] as APIGateway
+[User Access] as UserAccess
+[Registrations] as Registrations
+[Group Service] as GroupService
+[Meetings] as MeetingService
+[Payments] as PaymentService
+[Notification Service] as NotificationService
+[Payment Gateway] as PaymentGateway
+[Relational Database] as Database
+[Proposal Service] as ProposalService
+[Role Service] as RoleService
+
+WebClient --> APIGateway
+
+APIGateway --> UserAccess
+APIGateway --> Registrations
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+APIGateway --> NotificationService
+APIGateway --> ProposalService
+
+UserAccess --> RoleService
+RoleService --> Database
+
+Registrations --> UserAccess
+UserAccess --> Database
+
+GroupService --> Database
+GroupService --> PaymentService
+GroupService --> ProposalService
+
+MeetingService --> Database
+MeetingService --> PaymentService
+MeetingService --> GroupService
+
+ProposalService --> Database
+ProposalService --> GroupService
+ProposalService --> RoleService
+ProposalService --> NotificationService
+
+PaymentService --> Database
+PaymentService --> PaymentGateway
+PaymentService --> NotificationService
+
+NotificationService --> WebClient
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+package ECommercePlatform {
+  [Frontend] as Frontend
+  [Product Service] as ProductSvc
+  [Cart Service] as Cart
+  [Order Service] as Order
+  [Payment Service] as Payment
+  [Shipping Service] as Shipping
+  [Currency Service] as Currency
+  [Recommendation Engine] as Recommendation
+  [Advertisement Service] as Ads
+  [Email Service] as Email
+  [Session Manager] as SessionManager
+
+  Frontend --> ProductSvc
+  Frontend --> Cart
+  Frontend --> Order
+  Frontend --> Currency
+  Frontend --> Recommendation
+  Frontend --> Ads
+  Frontend --> SessionManager
+  Frontend --> Shipping
+
+  Cart --> ProductSvc
+  Cart --> SessionManager
+
+  Order --> Cart
+  Order --> Payment
+  Order --> Shipping
+  Order --> Email
+
+  Payment --> Currency
+
+  ProductSvc --> Currency
+
+  Recommendation --> ProductSvc
+  Recommendation --> Cart
+
+  Ads --> ProductSvc
+
+  SessionManager --> Cart
+  SessionManager --> Recommendation
+}
+@enduml

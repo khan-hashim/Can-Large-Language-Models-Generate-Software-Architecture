@@ -1,0 +1,75 @@
+@startuml
+package ECommerceSystem {
+
+  [Frontend] as Frontend
+  [API Gateway] as API
+  [Session Management] as Session
+  [Catalog Service] as Catalog
+  [Cart Service] as Cart
+  [Checkout Service] as Checkout
+  [Payment Service] as Payment
+  [Shipping Service] as Shipping
+  [Currency Conversion Service] as Currency
+  [Recommendation Engine] as Recommendation
+  [Ad Service] as Ads
+  [Email Service] as Email
+  [Order Service] as Order
+  [User Context/Session Cache] as Cache
+  [Relational Database] as DB
+  [Ad Network Provider] as AdNet
+  [SMTP Server] as SMTP
+  [Exchange Rate API] as FXAPI
+  [Shipping Rate Provider] as ShipAPI
+  [Payment Gateway] as PayAPI
+
+  ' Frontend interactions
+  Frontend --> API
+
+  ' API routes requests to services
+  API --> Session
+  API --> Catalog
+  API --> Cart
+  API --> Checkout
+  API --> Currency
+  API --> Recommendation
+  API --> Ads
+  API --> Order
+
+  ' Session management and caching
+  Session --> Cache
+
+  ' Catalog and Cart use DB and cache
+  Catalog --> DB
+  Catalog --> Cache
+  Cart --> DB
+  Cart --> Cache
+
+  ' Checkout orchestration
+  Checkout --> Cart
+  Checkout --> Order
+  Checkout --> Payment
+  Checkout --> Shipping
+  Checkout --> Email
+  Checkout --> Currency
+
+  ' Order service persists order state
+  Order --> DB
+
+  ' Payment and Shipping use external APIs
+  Payment --> PayAPI
+  Shipping --> ShipAPI
+
+  ' Currency service uses FX API
+  Currency --> FXAPI
+
+  ' Ads service integrates with ad network
+  Ads --> AdNet
+
+  ' Email service uses SMTP
+  Email --> SMTP
+
+  ' Recommendation engine queries DB and session
+  Recommendation --> DB
+  Recommendation --> Cache
+}
+@enduml

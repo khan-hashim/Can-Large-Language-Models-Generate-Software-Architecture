@@ -1,0 +1,45 @@
+@startuml
+' Community Meeting Management Platform - Improved High-level Components
+skinparam componentStyle rectangle
+
+[Frontend] as WebClient
+[API Gateway] as APIGateway
+
+[User Service] as UserService
+[Group Service] as GroupService
+[Meeting Service] as MeetingService
+[Payment Service] as PaymentService
+[Notification Service] as NotificationService
+[Payment Gateway] as PaymentGateway
+[Relational Database] as Database
+
+WebClient --> APIGateway
+
+APIGateway --> UserService
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+APIGateway --> NotificationService
+
+UserService --> Database
+GroupService --> Database
+MeetingService --> Database
+PaymentService --> Database
+
+' Role and Authorization enforced inside UserService or at API Gateway
+
+' Group proposal approval workflow
+GroupService --> NotificationService
+
+' Payment validation and enforcement
+GroupService --> PaymentService
+MeetingService --> PaymentService
+
+PaymentService --> PaymentGateway
+PaymentService --> NotificationService
+
+MeetingService --> NotificationService
+
+NotificationService --> WebClient
+
+@enduml

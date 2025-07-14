@@ -1,0 +1,25 @@
+@startuml
+package ECommercePlatform {
+[Frontend] as Frontend
+[Products Service] as ProductService
+[Cart] as Cart
+[Checkout] as Checkout
+[Payment] as Payment
+[Shipping] as Shipping
+[Currency] as Currency
+[Recommendation] as Recommendation
+[Ads] as Ads
+
+Frontend --> ProductService
+Frontend --> Cart
+Frontend --> Checkout
+Checkout --> Cart
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Currency
+ProductService --> Currency
+Frontend --> Recommendation
+Frontend --> Ads
+Checkout --> Ads
+}
+@enduml

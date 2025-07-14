@@ -1,0 +1,38 @@
+@startuml
+package MeetingManagementPlatform {
+
+  [Registrations & Role Management] as Registrations
+  [Meeting Group Management] as MeetingGroupMgmt
+  [Meeting Approval Workflow] as ApprovalWorkflow
+  [Meetings Management] as MeetingMgmt
+  [Payment Subsystem] as PaymentSubsystem
+  [Web Interface] as WebInterface
+
+  ' User interactions
+  WebInterface --> Registrations
+  WebInterface --> MeetingGroupMgmt
+  WebInterface --> MeetingMgmt
+  WebInterface --> ApprovalWorkflow
+
+  ' Role and user data used by other modules
+  MeetingGroupMgmt --> Registrations
+  ApprovalWorkflow --> Registrations
+
+  ' Approval workflow operates on meeting group proposals
+  ApprovalWorkflow --> MeetingGroupMgmt
+
+  ' Meetings depend on approved groups
+  MeetingMgmt --> MeetingGroupMgmt
+
+  ' Meetings require payment validation before creation
+  MeetingMgmt --> PaymentSubsystem
+
+  ' Meeting groups must be paid to stay active
+  MeetingGroupMgmt --> PaymentSubsystem
+
+  ' Optional: payments tied to user accounts/registrations (for transaction records)
+  PaymentSubsystem --> Registrations
+
+}
+
+@enduml

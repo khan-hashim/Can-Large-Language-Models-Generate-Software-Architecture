@@ -1,0 +1,47 @@
+@startuml
+package "Community Meeting Platform" {
+    actor "User" as User
+    actor "Administrator" as Admin
+
+    [Frontend] as WebUI
+    [API Gateway] as APIGateway
+    [User Management Service] as UserService
+    [Meeting Group Management Service] as GroupManagement
+    [Meeting Management Service] as MeetingManagement
+    [Administration Service] as AdminService
+    [Payment Integration Service] as PaymentIntegration
+    [Database] as Database
+    [External Payment Gateway] as PaymentGateway
+
+    User --> WebUI
+    WebUI --> APIGateway
+
+    APIGateway --> UserService
+    APIGateway --> GroupManagement
+    APIGateway --> MeetingManagement
+    APIGateway --> AdminService
+    APIGateway --> PaymentIntegration
+
+    UserService --> Database
+    GroupManagement --> Database
+    MeetingManagement --> Database
+
+    GroupManagement --> PaymentIntegration
+    MeetingManagement --> PaymentIntegration
+
+    Admin --> WebUI
+    AdminService --> GroupManagement
+    AdminService --> UserService
+
+    PaymentIntegration --> PaymentGateway
+    PaymentIntegration --> Database
+
+    ' User flows through the system
+    User --> WebUI
+    User --> WebUI
+    User --> WebUI
+    User --> WebUI
+
+}
+
+@enduml

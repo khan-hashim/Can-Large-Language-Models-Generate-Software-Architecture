@@ -1,0 +1,69 @@
+@startuml
+
+package "Community Meeting Management Platform" {
+
+  [Frontend] as WebUI
+  [API Gateway] as APIGateway
+
+  package "Services" {
+    [Registration Service] as RegistrationService
+    [Meeting Group Service] as MeetingGroupService
+    [Meeting Service] as MeetingService
+    [Payment Service] as PaymentService
+    [Notification Service] as NotificationService
+    [Admin Service] as AdminService ' Added for clarity on admin operations
+  }
+
+  package "Data Stores" {
+    database [Registration DB] as RegistrationDB
+    database [Meeting Group DB] as MeetingGroupDB
+    database [Meeting DB] as MeetingDB
+    database [Payment DB] as PaymentDB
+  }
+
+  [External Payment Gateway] as PaymentGateway
+  [Event Bus] as EventBus ' Added for asynchronous communication
+
+  ' Connections
+  WebUI --> APIGateway
+  APIGateway --> RegistrationService
+  APIGateway --> MeetingGroupService
+  APIGateway --> MeetingService
+  APIGateway --> PaymentService
+  APIGateway --> AdminService
+
+  RegistrationService --> RegistrationDB
+  MeetingGroupService --> MeetingGroupDB
+  MeetingService --> MeetingDB
+  PaymentService --> PaymentDB
+
+  PaymentService --> PaymentGateway
+
+  ' Event-driven communication for decoupling and notifications
+  RegistrationService --> EventBus
+  MeetingGroupService --> EventBus
+  MeetingService --> EventBus
+  PaymentService --> EventBus
+
+  EventBus --> NotificationService
+  EventBus --> MeetingService
+  EventBus --> MeetingGroupService
+  EventBus --> MeetingService
+  EventBus --> MeetingGroupService
+
+  ' Payment enforcement explicitly shown
+  MeetingService --> PaymentService
+
+  ' Admin specific flow
+  AdminService --> MeetingGroupService
+  MeetingGroupService --> AdminService
+
+  ' Notifications service gets info from events, but might need user details
+  NotificationService --> RegistrationService
+
+  ' Denormalization/caching example:
+  ' MeetingGroupService might cache relevant user data from RegistrationService events to avoid direct calls.
+  ' MeetingService might cache relevant group data from MeetingGroupService events.
+}
+
+@enduml

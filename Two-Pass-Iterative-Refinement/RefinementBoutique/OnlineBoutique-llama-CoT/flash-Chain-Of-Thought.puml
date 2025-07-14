@@ -1,0 +1,46 @@
+@startuml
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[API] as API
+[ProductService] as ProductService
+[CartService] as CartService
+[CheckoutService] as CheckoutService
+[PaymentService] as PaymentService
+[ShippingService] as ShippingService
+[CurrencyService] as CurrencyService
+[RecommendationService] as RecommendationService
+[AdsService] as AdsService
+[NotificationService] as NotificationService
+[SessionManagementService] as SessionManagementService
+
+database "ProductsDB" as ProductsDB
+database "OrderDB" as OrderDB
+database "SessionDB" as SessionDB
+
+Frontend --> API
+API --> ProductService
+API --> CartService
+API --> CheckoutService
+API --> SessionManagementService
+
+ProductService --> ProductsDB
+ProductService --> CurrencyService
+CartService --> OrderDB
+CartService --> CurrencyService
+CheckoutService --> CartService
+CheckoutService --> PaymentService
+CheckoutService --> ShippingService
+CheckoutService --> NotificationService
+CheckoutService --> OrderDB
+
+PaymentService --> OrderDB
+ShippingService --> OrderDB
+RecommendationService --> ProductService
+RecommendationService --> CartService
+AdsService --> ProductService
+
+SessionManagementService --> SessionDB
+}
+
+@enduml

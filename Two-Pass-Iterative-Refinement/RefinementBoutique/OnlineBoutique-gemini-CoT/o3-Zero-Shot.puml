@@ -1,0 +1,101 @@
+@startuml
+!pragma layout smetana
+
+' Define external systems/dependencies outside the main platform package
+[External Payment Gateway] as PaymentGateway
+[External Shipping Carrier API] as ShippingCarrierAPI
+[External Exchange Rate API] as ExchangeRateAPI
+[External Ad Network] as AdNetwork
+[External SMTP Service] as SmtpService
+
+package EcommercePlatform {
+    ' User Interface Components
+    [User Browser] as User
+    [Frontend] as Frontend
+
+    ' Gateway and Session Management
+    [API Gateway] as APIGateway
+    [Session Manager] as SessionManager
+    [Session Store] as SessionStore
+
+    ' Core Services
+    [Catalog Service] as CatalogService
+    [Cart Service] as CartService
+    [Recommendation Service] as RecommendationService
+    [Ads Service] as AdsService
+    [Currency Conversion Service] as CurrencyService
+    [Checkout Orchestrator] as CheckoutOrchestrator
+    [Order Service] as OrderService
+    [Payment Processing Service] as PaymentService
+    [Shipping Service] as ShippingService
+    [Email Notification Service] as EmailService
+
+    ' Databases and Caches
+    [Products Database] as ProductsDB
+    [Product Cache] as ProductCache
+    [Carts Database] as CartDB
+    [Orders Database] as OrderDB
+    [Currency Exchange Rate Cache] as CurrencyCache
+
+    ' Asynchronous Communication
+    [Order Event Queue] as OrderEventQueue
+
+    ' Flows and Interactions
+
+    ' 1. User Interaction Flow
+    User --> Frontend : Accesses Web UI
+    Frontend --> APIGateway : API Calls
+    Frontend --> SessionManager : Manages User Sessions (e.g., via cookies)
+    APIGateway --> SessionManager : Propagates/Validates Session Context
+
+    ' 2. API Gateway Routing
+    APIGateway --> CatalogService
+    APIGateway --> CartService
+    APIGateway --> RecommendationService
+    APIGateway --> AdsService
+    APIGateway --> CurrencyService
+    APIGateway --> CheckoutOrchestrator
+
+    ' 3. Catalog Service Flow
+    CatalogService --> ProductCache : Read/Write (primary cache)
+    CatalogService --> ProductsDB : Read/Write (fallback/source of truth)
+
+    ' 4. Cart Service Flow
+    CartService --> CartDB : Stores/Retrieves Carts
+    CartService --> SessionManager : Links Carts to Sessions
+    CartService --> CatalogService : Validates Product existence/details
+
+    ' 5. Recommendation Service Flow
+    RecommendationService --> CartService : Based on Cart Contents
+    RecommendationService --> CatalogService : Retrieves Product Information
+
+    ' 6. Ads Service Flow
+    AdsService --> AdNetwork : Fetches Contextual Ads
+
+    ' 7. Currency Conversion Service Flow
+    CurrencyService --> CurrencyCache : Read/Write (primary cache)
+    CurrencyService --> ExchangeRateAPI : Fetches Latest Rates (fallback/update)
+
+    ' 8. Checkout Orchestration Flow
+    CheckoutOrchestrator --> CartService : Retrieves Final Cart Contents
+    CheckoutOrchestrator --> OrderService : Creates Order
+    CheckoutOrchestrator --> PaymentService : Initiates Payment
+    CheckoutOrchestrator --> ShippingService : Arranges Shipping
+    CheckoutOrchestrator --> OrderEventQueue : Publishes Order Confirmation Event (Async)
+
+    ' 9. Order Service Flow
+    OrderService --> OrderDB : Persists Order Details
+
+    ' 10. Payment Processing Service Flow
+    PaymentService --> PaymentGateway : Processes Payments
+    PaymentService --> CurrencyService : For Currency Conversion in Payment Amounts
+
+    ' 11. Shipping Service Flow
+    ShippingService --> ShippingCarrierAPI : Integrates with Carriers
+    ShippingService --> CurrencyService : For Currency Conversion in Shipping Costs
+
+    ' 12. Email Notification Service Flow (Asynchronous)
+    OrderEventQueue --> EmailService : Consumes Order Events
+    EmailService --> SmtpService : Sends Emails
+}
+@enduml

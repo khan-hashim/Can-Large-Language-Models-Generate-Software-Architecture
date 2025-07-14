@@ -1,0 +1,64 @@
+@startuml
+package ECommerceSystem {
+
+    [Frontend]             as Frontend
+    [API Gateway]          as API
+    [Session Service]      as SessionService
+
+
+    [Catalog Service]      as Catalog
+    [Cart Service]         as Cart
+    [Checkout Service]     as Checkout
+    [Payment Service]      as PaymentService
+    [Shipping Service]     as ShippingService
+    [Currency Service]     as CurrencyService
+    [Recommendation Service] as RecommendationService
+    [Ads Service]          as AdsService
+    [Email Service]        as EmailService
+
+
+    [Relational Database]  as DB
+    [Cache]                as Cache
+
+    package "External Services" {
+        [External Payment Gateway]     as ExtPaymentGateway
+        [External Shipping Provider]   as ExtShippingProvider
+        [External Currency Exchange Service] as ExtCurrencyExchangeService
+        [External Recommendation Engine] as ExtRecommendationEngine
+        [Ad Network]                   as AdNet
+        [SMTP Server]                  as SMTP
+    }
+
+    Frontend --> API
+    API --> SessionService
+
+    SessionService --> Cache
+
+    API --> Catalog
+    API --> Cart
+    API --> Checkout
+    API --> CurrencyService
+    API --> RecommendationService
+    API --> AdsService
+
+    Catalog --> DB
+    Catalog --> Cache
+    Cart --> DB
+    Cart --> Cache
+
+    Checkout --> Cart
+    Checkout --> PaymentService
+    Checkout --> ShippingService
+    Checkout --> EmailService
+    Checkout --> DB : Persists Order
+
+    PaymentService --> ExtPaymentGateway
+    ShippingService --> ExtShippingProvider
+    CurrencyService --> ExtCurrencyExchangeService
+    RecommendationService --> ExtRecommendationEngine
+    RecommendationService --> Cart : Get Cart Contents
+    AdsService --> AdNet
+    AdsService --> Catalog : Get Product Context
+    EmailService --> SMTP
+}
+@enduml

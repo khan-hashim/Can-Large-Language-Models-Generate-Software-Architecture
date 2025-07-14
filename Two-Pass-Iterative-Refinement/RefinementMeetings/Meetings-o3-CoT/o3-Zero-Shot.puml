@@ -1,0 +1,73 @@
+@startuml
+package CommunityMeetingPlatform {
+
+  [Frontend] as WebClient
+  [API Gateway] as ApiGateway
+  [User Service] as UserService
+  [Group Proposal Service] as GroupProposalService
+  [Group Service] as GroupService
+  [Meeting Service] as MeetingService
+  [Payment Service] as PaymentService
+  [Notification Service] as NotificationService
+  [External Payment Gateway] as PaymentGateway
+
+  ' Databases per service
+  database UserDB as UserDB
+  database GroupProposalDB as GroupProposalDB
+  database GroupDB as GroupDB
+  database MeetingDB as MeetingDB
+  database PaymentDB as PaymentDB
+  database NotificationDB as NotificationDB
+
+  ' Client to API Gateway
+  WebClient --> ApiGateway
+
+  ' API Gateway routes requests after authenticating users via UserService
+  ApiGateway --> UserService
+  ApiGateway --> GroupProposalService
+  ApiGateway --> GroupService
+  ApiGateway --> MeetingService
+  ApiGateway --> PaymentService
+  ApiGateway --> NotificationService
+
+  ' UserService manages users, roles, authentication/authorization
+  UserService --> UserDB
+
+  ' GroupProposalService manages proposals
+  GroupProposalService --> GroupProposalDB
+
+  ' GroupService manages approved groups and memberships
+  GroupService --> GroupDB
+
+  ' MeetingService manages meetings, validates meeting details and permissions
+  MeetingService --> MeetingDB
+
+  ' PaymentService processes payments, validates group payment status
+  PaymentService --> PaymentDB
+  PaymentService --> PaymentGateway
+
+  ' NotificationService sends notifications asynchronously
+  NotificationService --> NotificationDB
+
+  ' Inter-service interactions
+
+  ' GroupProposalService notifies GroupService of proposal approvals/rejections
+  GroupProposalService --> GroupService
+
+  ' MeetingService requests payment status from PaymentService before meeting creation
+  MeetingService --> PaymentService
+
+  ' MeetingService validates group and membership via GroupService
+  MeetingService --> GroupService
+
+  ' PaymentService updates GroupService about payment status changes
+  PaymentService --> GroupService
+
+  ' Backend services emit events to NotificationService for notifications
+  GroupProposalService --> NotificationService
+  GroupService --> NotificationService
+  MeetingService --> NotificationService
+  PaymentService --> NotificationService
+
+}
+@enduml

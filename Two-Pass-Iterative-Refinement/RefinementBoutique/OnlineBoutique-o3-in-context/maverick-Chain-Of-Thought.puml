@@ -1,0 +1,45 @@
+@startuml
+package ECommercePlatform {
+[Frontend] as Frontend
+[Product Service] as ProductSvc
+[Cart Service] as CartSvc
+[Order Service] as OrderSvc
+[Payment Service] as PaymentSvc
+[Shipping Service] as ShippingSvc
+[Currency Service] as CurrencySvc
+[Recommendation Service] as RecommendationSvc
+[Ads Service] as AdsSvc
+[Email Service] as EmailSvc
+[Session Manager] as SessionManager
+
+' Frontend interactions
+Frontend --> ProductSvc : browse & view products
+Frontend --> CartSvc : add, delete, edit cart items
+Frontend --> OrderSvc : initiate checkout
+Frontend --> CurrencySvc : get exchange rates for UI display
+Frontend --> RecommendationSvc : get personalized recommendations
+Frontend --> AdsSvc : get contextual advertisements
+Frontend --> SessionManager : manage user sessions
+Frontend --> ShippingSvc : get estimated shipping cost & delivery time
+
+' Backend internal calls
+CartSvc --> ProductSvc : validate & fetch product details
+OrderSvc --> CartSvc : retrieve cart contents
+OrderSvc --> PaymentSvc : process payments
+OrderSvc --> ShippingSvc : arrange shipping
+OrderSvc --> EmailSvc : send order confirmation
+
+' Currency service used by product & shipping for price conversion
+ProductSvc --> CurrencySvc : convert prices
+ShippingSvc --> CurrencySvc : convert shipping costs
+
+' Recommendation service depends on product data
+RecommendationSvc --> ProductSvc
+
+' Ads service delivers ads to frontend
+AdsSvc --> Frontend
+
+' Shipping service uses product info for logistics
+ShippingSvc --> ProductSvc
+}
+@enduml

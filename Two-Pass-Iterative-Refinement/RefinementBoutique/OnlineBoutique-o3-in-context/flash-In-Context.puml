@@ -1,0 +1,70 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+
+  [Frontend] as Frontend
+  [Catalog] as Catalog
+  [Cart] as Cart
+  [Order] as Order
+  [Payment] as Payment
+  [Shipping] as Shipping
+  [Currency] as Currency
+  [Recommendation] as Recommendation
+  [Ads] as Ads
+  [Notification] as Notification
+  [Message Queue] as MQ
+  [Session Management] as Session
+
+  ' User browsing and product info
+  Frontend --> Catalog
+
+  ' Cart management and retrieval
+  Frontend --> Cart
+  Cart --> Catalog
+
+  ' Frontend triggers checkout process
+  Frontend --> Order
+
+  ' Order depends on Cart
+  Order --> Cart
+
+  ' Order publishes to MQ to coordinate payment, shipping, notification asynchronously
+  Order --> MQ
+
+  ' Payment and Shipping consume order info via MQ
+  MQ --> Payment
+  MQ --> Shipping
+
+  ' Payment processes payment, may publish payment result events
+  Payment --> MQ
+
+  ' Shipping calculates costs based on order/cart info
+  Shipping --> MQ
+
+  ' Notification consumes events from MQ for sending confirmations etc.
+  MQ --> Notification
+
+  ' Currency conversion used by Frontend and Catalog (for displaying prices)
+  Frontend --> Currency
+  Catalog --> Currency
+
+  ' Recommendations based on Cart and Catalog, provided to Frontend
+  Recommendation --> Cart
+  Recommendation --> Catalog
+  Frontend --> Recommendation
+
+  ' Ads shown in frontend
+  Frontend --> Ads
+
+  ' Session management supports Frontend (no mandatory auth, but session tracking)
+  Frontend --> Session
+
+  ' Shipping may need access to Cart for cost/delivery estimation
+  Shipping --> Cart
+
+}
+
+center footer PlantUML Component Diagram - E-Commerce Platform
+
+@enduml

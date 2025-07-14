@@ -1,0 +1,62 @@
+@startuml
+package CommunityMeetingPlatform {
+
+  [Frontend] as WebClient
+  [API Gateway] as APIGW
+
+  package "Core Services" {
+    [UserIdentity Service] as UIS
+    [Group Service] as GroupSvc
+    [Meeting Service] as MeetingSvc
+    [Payment Service] as PaySvc
+    [Notification Service] as NotiSvc
+  }
+
+  package "Data Stores" {
+    [User Database] as UserDB
+    [Group Database] as GroupDB
+    [Meeting Database] as MeetingDB
+    [Payment Database] as PaymentDB
+  }
+
+  package "Messaging" {
+    [Event Bus] as EventBus
+  }
+
+  package "External Integrations" {
+    [Payment Gateway Adapter] as PayAdapter
+    [External Payment Provider] as ExtPay
+  }
+
+  ' API Gateway interactions
+  WebClient --> APIGW
+  APIGW --> UIS
+  APIGW --> GroupSvc
+  APIGW --> MeetingSvc
+  APIGW --> PaySvc
+
+  ' Service-to-Database interactions
+  UIS --> UserDB
+  GroupSvc --> GroupDB
+  MeetingSvc --> MeetingDB
+  PaySvc --> PaymentDB
+
+  ' Inter-service communication & business logic
+  MeetingSvc --> GroupSvc
+  MeetingSvc --> PaySvc
+
+  ' Payment subsystem flow
+  PaySvc --> PayAdapter
+  PayAdapter --> ExtPay
+
+  ' Event-driven communication
+  UIS --> EventBus
+  GroupSvc --> EventBus
+  MeetingSvc --> EventBus
+  PaySvc --> EventBus
+
+  EventBus --> NotiSvc
+  EventBus --> GroupSvc
+
+}
+@enduml

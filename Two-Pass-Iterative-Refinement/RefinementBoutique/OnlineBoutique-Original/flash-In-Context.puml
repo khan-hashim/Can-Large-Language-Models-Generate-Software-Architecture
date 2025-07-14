@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+[Frontend] as Frontend
+[Catalog] as Catalog
+[Cart] as Cart
+[Order] as Order
+[Payment] as Payment
+[Shipping] as Shipping
+[Currency] as Currency
+[Recommendation] as Recommendation
+[Ads] as Ads
+[Notification] as Notification
+[Message Queue] as MQ
+
+Frontend --> Catalog
+Frontend --> Cart
+Frontend --> Currency
+Frontend --> Recommendation
+Frontend --> Ads
+
+Cart --> Catalog
+
+Order --> Cart
+Order --> Payment
+Order --> Shipping
+Order --> Notification
+Order --> MQ
+
+Payment --> MQ
+Shipping --> MQ
+
+Recommendation --> Cart
+Recommendation --> Catalog
+
+Notification <-- MQ
+Notification <-- MQ
+Notification <-- MQ
+
+Catalog --> Currency
+
+}
+
+center footer PlantUML Component Diagram - E-Commerce Platform
+
+@enduml

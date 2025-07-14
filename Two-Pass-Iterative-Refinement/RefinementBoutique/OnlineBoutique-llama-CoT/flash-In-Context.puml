@@ -1,0 +1,44 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+    [Frontend] as Frontend
+    [API Gateway] as APIGateway
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Order Service] as OrderService
+    [Payment] as Payment
+    [Shipping] as Shipping
+    [Currency] as Currency
+    [Recommendation] as Recommendation
+    [Ads] as Ads
+    [Notification] as Notification
+    [Message Queue] as MQ
+    [Session Manager] as SessionManager
+
+    Frontend --> APIGateway
+    APIGateway --> Catalog
+    APIGateway --> Cart
+    APIGateway --> OrderService
+    APIGateway --> SessionManager
+
+    Cart --> Catalog
+    OrderService --> Cart
+    OrderService --> Payment
+    OrderService --> Shipping
+    OrderService --> Notification
+
+    Payment --> MQ
+    Shipping --> MQ
+    Notification --> MQ
+
+    Recommendation --> Cart
+    Recommendation --> Catalog
+
+    Catalog --> Currency
+    Ads --> Catalog
+
+    SessionManager --> Cart
+}
+
+@enduml

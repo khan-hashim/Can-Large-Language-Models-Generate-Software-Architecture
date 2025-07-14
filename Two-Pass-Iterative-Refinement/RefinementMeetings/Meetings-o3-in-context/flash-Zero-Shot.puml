@@ -1,0 +1,54 @@
+@startuml
+package "Community Meeting Platform" {
+
+  [Frontend] as WebUI
+  [API Gateway] as APIGateway
+
+  [Registrations & Auth] as Registrations
+  [Group Management Service] as GroupManagement
+  [Meeting Management Service] as MeetingManagement
+  [Administration UI] as Administration
+  [Payment Service] as PaymentService
+
+  [Database] as Database
+  [External Payment Gateway] as PaymentGateway
+
+  ' User interactions
+  WebUI --> APIGateway
+
+  ' Routing requests
+  APIGateway --> Registrations
+  APIGateway --> GroupManagement
+  APIGateway --> MeetingManagement
+  APIGateway --> Administration
+  APIGateway --> PaymentService
+
+  ' Registrations manages users & roles, reads/writes to DB
+  Registrations --> Database
+
+  ' GroupManagement handles proposals, group data, memberships
+  GroupManagement --> Database
+
+  ' MeetingManagement handles meetings data
+  MeetingManagement --> Database
+
+  ' PaymentService handles payments & statuses
+  PaymentService --> Database
+  PaymentService --> PaymentGateway
+
+  ' Payment validation for group creation enforced by GroupManagement via PaymentService
+  GroupManagement --> PaymentService
+
+  ' Meeting fees processed via PaymentService
+  MeetingManagement --> PaymentService
+
+  ' Admins review proposals via Administration UI accessing GroupManagement data
+  Administration --> GroupManagement
+
+  ' Authorization flow (conceptual)
+  Registrations --> GroupManagement
+  Registrations --> MeetingManagement
+  Registrations --> Administration
+
+}
+@enduml

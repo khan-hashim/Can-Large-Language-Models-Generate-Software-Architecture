@@ -1,0 +1,40 @@
+@startuml
+package MeetingManagementPlatform {
+  [Frontend] as WebInterface
+  [User Management] as UserMgmt
+  [Role Management] as RoleMgmt
+  [Meeting Group Proposals] as GroupProposalMgmt
+  [Meeting Group Management] as GroupMgmt
+  [Meeting Management] as MeetingMgmt
+  [Payment Subsystem] as PaymentSubsystem
+  [Authorization Service] as AuthZ
+  [Database] as DB
+
+  WebInterface --> UserMgmt
+  WebInterface --> GroupProposalMgmt
+  WebInterface --> GroupMgmt
+  WebInterface --> MeetingMgmt
+  WebInterface --> PaymentSubsystem
+
+  UserMgmt --> RoleMgmt
+  UserMgmt --> DB
+  RoleMgmt --> DB
+
+  GroupProposalMgmt --> UserMgmt
+  GroupProposalMgmt --> RoleMgmt
+  GroupProposalMgmt --> AuthZ
+  GroupProposalMgmt --> DB
+
+  GroupMgmt --> GroupProposalMgmt
+  GroupMgmt --> PaymentSubsystem
+  GroupMgmt --> DB
+
+  MeetingMgmt --> GroupMgmt
+  MeetingMgmt --> PaymentSubsystem
+  MeetingMgmt --> DB
+
+  PaymentSubsystem --> DB
+
+  AuthZ --> RoleMgmt
+}
+@enduml

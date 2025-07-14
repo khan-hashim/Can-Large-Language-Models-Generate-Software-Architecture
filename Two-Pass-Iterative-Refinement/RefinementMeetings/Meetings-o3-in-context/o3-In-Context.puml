@@ -1,0 +1,59 @@
+@startuml
+skinparam componentStyle rectangle
+
+[Frontend] as WebClient
+[API Gateway] as APIGateway
+
+[Auth Service] as AuthService
+[User Registration Service] as RegistrationService
+[Role Manager] as RoleManager
+
+[Group Proposal Service] as GroupProposalService
+[Proposal Review Service] as ProposalReview
+[Group Payment Validator] as GroupPaymentValidator
+
+[Meeting Service] as MeetingService
+[Meeting Payment Validator] as MeetingPaymentValidator
+
+[Payment Service] as PaymentService
+[Notification Service] as NotificationService
+[Payment Gateway] as PaymentGateway
+[Relational Database] as Database
+
+WebClient --> APIGateway
+
+APIGateway --> AuthService
+APIGateway --> RegistrationService
+APIGateway --> RoleManager
+APIGateway --> GroupProposalService
+APIGateway --> ProposalReview
+APIGateway --> GroupPaymentValidator
+APIGateway --> MeetingService
+APIGateway --> MeetingPaymentValidator
+APIGateway --> PaymentService
+APIGateway --> NotificationService
+
+AuthService --> Database
+RegistrationService --> Database
+RoleManager --> Database
+GroupProposalService --> Database
+ProposalReview --> Database
+MeetingService --> Database
+PaymentService --> Database
+
+GroupProposalService --> GroupPaymentValidator
+GroupProposalService --> NotificationService
+ProposalReview --> NotificationService
+
+MeetingService --> MeetingPaymentValidator
+MeetingService --> NotificationService
+
+GroupPaymentValidator --> PaymentService
+MeetingPaymentValidator --> PaymentService
+
+PaymentService --> PaymentGateway
+PaymentService --> NotificationService
+
+NotificationService --> WebClient
+
+@enduml

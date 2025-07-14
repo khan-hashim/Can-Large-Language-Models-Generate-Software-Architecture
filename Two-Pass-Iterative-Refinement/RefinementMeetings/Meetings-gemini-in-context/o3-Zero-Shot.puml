@@ -1,0 +1,42 @@
+@startuml
+package CommunityMeetingPlatform {
+
+[Frontend] as WebClient
+[API Gateway] as ApiGateway
+[User Management Service] as UserManagementService
+[Group Management Service] as GroupManagementService
+[Meeting Management Service] as MeetingManagementService
+[Payment Processing Service] as PaymentProcessingService
+[Notification Service] as NotificationService
+[External Payment Gateway] as ExternalPaymentGateway
+[Database] as Database
+
+WebClient --> ApiGateway
+
+ApiGateway --> UserManagementService
+ApiGateway --> GroupManagementService
+ApiGateway --> MeetingManagementService
+ApiGateway --> PaymentProcessingService
+ApiGateway --> NotificationService
+
+UserManagementService --> Database
+GroupManagementService --> Database
+MeetingManagementService --> Database
+PaymentProcessingService --> Database
+NotificationService --> Database
+
+UserManagementService --> GroupManagementService
+GroupManagementService --> UserManagementService
+GroupManagementService --> NotificationService
+GroupManagementService --> PaymentProcessingService
+
+MeetingManagementService --> GroupManagementService
+MeetingManagementService --> PaymentProcessingService
+MeetingManagementService --> NotificationService
+
+PaymentProcessingService --> ExternalPaymentGateway
+PaymentProcessingService --> GroupManagementService
+PaymentProcessingService --> NotificationService
+
+}
+@enduml

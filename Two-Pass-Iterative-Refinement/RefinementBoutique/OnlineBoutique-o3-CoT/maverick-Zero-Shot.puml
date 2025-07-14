@@ -1,0 +1,47 @@
+@startuml
+package ECommercePlatform {
+  [Frontend] as Frontend
+  [Products Service] as ProductService
+  [Cart Service] as CartService
+  [Checkout Service] as CheckoutService
+  [Order Management] as OrderMgmt
+  [Payment Service] as PaymentService
+  [Shipping Service] as ShippingService
+  [Currency Service] as CurrencyService
+  [Recommendation Service] as RecommendationService
+  [Ads Service] as AdsService
+  [Session Management] as SessionService
+  [Email Service] as EmailService
+  [Location Service] as LocationService
+
+  Frontend --> SessionService
+  Frontend --> ProductService
+  Frontend --> CartService
+  Frontend --> CheckoutService
+  Frontend --> RecommendationService
+  Frontend --> AdsService
+
+  CartService --> SessionService
+  CartService --> CurrencyService
+
+  RecommendationService --> CartService
+  RecommendationService --> SessionService
+
+  CheckoutService --> CartService
+  CheckoutService --> PaymentService
+  CheckoutService --> ShippingService
+  CheckoutService --> CurrencyService
+  CheckoutService --> OrderMgmt
+  CheckoutService --> EmailService
+  CheckoutService --> SessionService
+
+  ShippingService --> LocationService
+
+  ProductService --> CurrencyService
+
+  PaymentService --> PaymentService : "Supports multiple payment methods"
+
+  AdsService --> SessionService
+
+}
+@enduml

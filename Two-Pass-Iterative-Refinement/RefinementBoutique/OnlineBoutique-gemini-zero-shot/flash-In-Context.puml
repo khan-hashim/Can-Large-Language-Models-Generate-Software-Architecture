@@ -1,0 +1,50 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+  [Frontend] as Frontend
+  [Catalog Service] as Catalog
+  [Shopping Cart Service] as Cart
+  [Order Processing Service] as Order
+  [Payment Gateway Integration] as Payment
+  [Shipping Service] as Shipping
+  [Currency Conversion Service] as Currency
+  [Product Recommendation Service] as Recommendation
+  [Advertisement Service] as Ads
+  [Notification Service] as Notification
+  [Message Queue] as MQ
+  [Session Management Service] as SessionService
+}
+
+' Frontend interactions'
+Frontend --> Catalog : Browsing & Details
+Frontend --> Cart : Manage Items
+Frontend --> Currency : Display Conversion
+Frontend --> Recommendation : Show Recommendations
+Frontend --> Ads : Display Contextual Ads
+Frontend --> SessionService : Manage User Sessions
+
+' Shopping Cart Service interactions '
+Cart --> Catalog : Validate Product Info
+Cart --> SessionService : Persist Cart Data
+
+' Order Processing Service interactions '
+Order --> Cart : Retrieve Cart Contents
+Order --> Payment : Coordinate Payment
+Order --> Shipping : Arrange Shipping
+Order --> MQ : Publish Order Events
+
+' Asynchronous Processing '
+Payment --> MQ : Payment Status
+Shipping --> MQ : Shipping Status
+MQ --> Notification : Order Confirmation
+
+' Recommendation Service interactions '
+Recommendation --> Cart : Based on Cart Contents
+Recommendation --> Catalog : Get Product Data
+
+' Advertisement Service interactions '
+Ads --> Catalog : For Contextual Ads
+
+center footer PlantUML Component Diagram - E-Commerce Platform
+@enduml

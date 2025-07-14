@@ -1,0 +1,58 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-toolkit-jetbrains/master/resources/icons/aws.puml
+
+package ECommercePlatform {
+
+  [Frontend] as Frontend
+  [API] as API
+  [Catalog Service] as Catalog
+  [Cart Service] as Cart
+  [Checkout Service] as Checkout
+  [Payment Gateway] as Payment
+  [Shipping Service] as Shipping
+  [Currency Conversion Service] as Currency
+  [Recommendation Engine] as Recommendation
+  [Advertisement Service] as Ads
+  [Notification Service] as Notification
+  [Session Management] as SessionManagement
+
+  database "Products Database" as ProductsDB
+  database "Cart Database" as CartDB
+  database "Order Database" as OrderDB
+  database "User Session Database" as SessionDB
+
+  ' Frontend interactions
+  Frontend --> API : Requests data & actions
+
+  ' API interactions with core services
+  API --> Catalog : Manages product catalog
+  API --> Cart : Manages shopping cart
+  API --> Checkout : Initiates checkout process
+  API --> Recommendation : Fetches product recommendations
+  API --> Ads : Fetches contextual advertisements
+  API --> SessionManagement : Manages user sessions
+
+  ' Checkout service orchestration
+  Checkout --> Payment : Coordinates payment processing
+  Checkout --> Shipping : Coordinates shipping arrangements
+  Checkout --> Notification : Sends order confirmation emails
+  Checkout --> OrderDB : Stores final order details
+  Checkout --> Cart : Retrieves cart contents for order
+  Checkout --> Currency : Converts final amounts for payment
+
+  ' Core service data interactions
+  Catalog --> ProductsDB : Accesses product information
+  Cart --> CartDB : Manages persistent cart data
+  SessionManagement --> SessionDB : Stores session information
+
+  ' Currency conversion service usage
+  Catalog --> Currency : Converts product prices for display
+  Cart --> Currency : Converts cart totals for display
+
+  ' Recommendation engine data sources
+  Recommendation --> Cart : Bases recommendations on cart contents
+  Recommendation --> Catalog : Accesses product data for recommendations
+
+}
+
+@enduml

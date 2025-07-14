@@ -1,0 +1,26 @@
+@startuml
+package MeetingManagementPlatform {
+  [Frontend] as Frontend
+  [User Authentication & Authorization Service] as UserAuthService
+  [Meeting Group Management Service] as MeetingGroupService
+  [Meeting Management Service] as MeetingService
+  [Payment Service] as PaymentService
+  [Database] as Database
+
+  Frontend --> UserAuthService
+  Frontend --> MeetingGroupService
+  Frontend --> MeetingService
+
+  MeetingGroupService --> UserAuthService
+  MeetingGroupService --> PaymentService
+  MeetingGroupService --> Database
+
+  MeetingService --> UserAuthService
+  MeetingService --> MeetingGroupService
+  MeetingService --> PaymentService
+  MeetingService --> Database
+
+  PaymentService --> Database
+  UserAuthService --> Database
+}
+@enduml

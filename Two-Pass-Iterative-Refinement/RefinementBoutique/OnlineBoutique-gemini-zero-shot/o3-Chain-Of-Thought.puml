@@ -1,0 +1,64 @@
+@startuml
+package "E-commerce System" {
+    [Frontend] as Frontend
+    [API Gateway] as APIGateway
+    [Session Service] as SessionService
+
+    [Catalog Service] as CatalogService
+    [Cart Service] as CartService
+    [Checkout Service] as CheckoutService
+    [Payment Service] as PaymentService
+    [Shipping Service] as ShippingService
+    [Currency Conversion Service] as CurrencyService
+    [Recommendation Service] as RecommendationService
+    [Advertisement Service] as AdService
+    [Email Service] as EmailService
+
+    [Product Database] as ProductDB
+    [Cache Store] as Cache
+
+    Frontend --> APIGateway : Requests
+    Frontend --> SessionService : Manages sessions
+
+    SessionService --> Cache : Stores session data
+
+    APIGateway --> CatalogService : Product browsing
+    APIGateway --> CartService : Cart management
+    APIGateway --> CheckoutService : Order processing
+    APIGateway --> CurrencyService : Currency display
+    APIGateway --> RecommendationService : Personalized recommendations
+    APIGateway --> AdService : Contextual ads
+
+    CatalogService --> ProductDB : Retrieves product info
+    CatalogService --> Cache : Caches product data
+
+    CartService --> ProductDB : Stores cart data
+    CartService --> Cache : Caches cart data
+
+    CheckoutService --> CartService : Retrieves cart contents
+    CheckoutService --> PaymentService : Initiates payment
+    CheckoutService --> ShippingService : Arranges shipping
+    CheckoutService --> EmailService : Sends confirmation
+    CheckoutService --> ProductDB : Persists order data
+
+    PaymentService --> ExternalPaymentGateway : Processes transactions
+    ShippingService --> ExternalShippingProvider : Calculates costs/times
+    CurrencyService --> ExternalCurrencyAPI : Fetches exchange rates
+
+    RecommendationService --> CatalogService : Accesses product data
+    RecommendationService --> CartService : Accesses cart contents for personalization
+    RecommendationService --> ExternalRecommendationEngine : Utilizes external engine
+
+    AdService --> AdNetwork : Fetches advertisements
+    EmailService --> SMTPServer : Sends emails
+}
+
+package "External Systems" {
+    [External Payment Gateway] as ExternalPaymentGateway
+    [External Shipping Provider] as ExternalShippingProvider
+    [External Currency API] as ExternalCurrencyAPI
+    [External Recommendation Engine] as ExternalRecommendationEngine
+    [Ad Network] as AdNetwork
+    [SMTP Server] as SMTPServer
+}
+@enduml

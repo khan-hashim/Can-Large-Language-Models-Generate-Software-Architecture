@@ -1,0 +1,48 @@
+@startuml
+package "Community Meeting Management Platform" {
+
+  [Frontend] as UI
+  [API Gateway] as API
+
+  [User Access Service] as UserAccess
+  [Meeting Group Service] as GroupService
+  [Meeting Service] as MeetingService
+  [Payment Service] as PaymentService
+
+  [User Database] as UserDB
+  [Meeting Group Database] as GroupDB
+  [Meeting Database] as MeetingDB
+  [Payment Database] as PaymentDB
+
+  UI --> API
+
+  API --> UserAccess
+  API --> GroupService
+  API --> MeetingService
+  API --> PaymentService
+
+  UserAccess --> UserDB
+
+  GroupService --> GroupDB
+  GroupService --> UserAccess
+
+  ' New connections for Group Proposal Workflow
+  API --> GroupService
+  GroupService --> GroupDB
+  API --> GroupService
+  GroupService --> GroupDB
+
+  MeetingService --> MeetingDB
+  MeetingService --> GroupService
+
+  ' Corrected Payment Validation Flow
+  MeetingService --> PaymentService
+  PaymentService --> PaymentDB
+  PaymentService --> GroupService
+  ' Note: GroupService might store a payment status flag based on PaymentService feedback.
+
+  PaymentService --> API
+
+}
+
+@enduml

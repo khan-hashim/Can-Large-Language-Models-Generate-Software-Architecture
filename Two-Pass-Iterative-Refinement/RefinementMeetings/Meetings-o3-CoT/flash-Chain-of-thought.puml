@@ -1,0 +1,62 @@
+@startuml
+
+package "Community Meeting Management Platform" {
+
+[Frontend] as WebUI
+[API Gateway] as APIGateway
+
+package "Core Services" {
+  [Auth Service] as AuthService
+  [Registrations] as Registrations
+  [Meeting Group Service] as GroupService
+  [Meetings] as MeetingService
+  [Payments] as PaymentService
+  [Notification Service] as NotificationService
+}
+
+package "Data Stores" {
+  database [Registrations DB] as RegistrationsDB
+  database [Group Database] as GroupDB
+  database [Meetings DB] as MeetingDB
+  database [Payments DB] as PaymentDB
+}
+
+[External Payment Gateway] as PaymentGateway
+
+' Connections
+WebUI --> APIGateway
+
+APIGateway --> AuthService
+APIGateway --> Registrations
+APIGateway --> GroupService
+APIGateway --> MeetingService
+APIGateway --> PaymentService
+
+AuthService --> RegistrationsDB
+
+Registrations --> RegistrationsDB
+GroupService --> GroupDB
+MeetingService --> MeetingDB
+PaymentService --> PaymentDB
+PaymentService --> PaymentGateway
+
+' Role & Permission Checks
+APIGateway --> AuthService
+GroupService --> AuthService
+MeetingService --> AuthService
+
+' Service Interactions
+NotificationService --> Registrations
+MeetingService --> NotificationService
+GroupService --> NotificationService
+
+GroupService --> Registrations
+MeetingService --> Registrations
+
+' Payment Enforcement
+GroupService --> PaymentService
+MeetingService --> PaymentService
+
+}
+
+@enduml

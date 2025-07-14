@@ -1,0 +1,74 @@
+@startuml
+package ECommerceSystem {
+
+    [Frontend] as Frontend
+    [API] as API
+    [SessionService] as SessionService
+    [Cache] as Cache
+
+    [CatalogService] as Catalog
+    [CartService] as Cart
+    [CheckoutService] as Checkout
+    [OrderService] as Order
+    [PaymentService] as Payment
+    [PaymentGateway] as PaymentGateway
+    [ShippingService] as Shipping
+    [ShippingProvider] as ShippingProvider
+    [CurrencyService] as Currency
+    [RecommendationService] as Recommendation
+    [AdsService] as Ads
+    [AdNetworkProvider] as AdNetwork
+    [EmailService] as Email
+    [EmailQueue] as EmailQueue
+    [SMTPServer] as SMTP
+
+    [RelationalDatabase] as DB
+
+    ' Frontend only interacts with API
+    Frontend --> API
+
+    ' API manages session internally, session backed by cache
+    API --> SessionService
+    SessionService --> Cache
+
+    ' API orchestrates all backend services
+    API --> Catalog
+    API --> Cart
+    API --> Checkout
+    API --> Currency
+    API --> Recommendation
+    API --> Ads
+
+    ' Catalog and Cart use DB and cache
+    Catalog --> DB
+    Catalog --> Cache
+    Cart --> DB
+    Cart --> Cache
+
+    ' Checkout depends on Cart, Payment, Shipping, Order, Email, DB
+    Checkout --> Cart
+    Checkout --> Payment
+    Checkout --> Shipping
+    Checkout --> Order
+    Checkout --> Email
+    Checkout --> DB
+
+    ' Payment and Shipping integrate with external providers
+    Payment --> PaymentGateway
+    Shipping --> ShippingProvider
+
+    ' Currency service caches exchange rates
+    Currency --> Cache
+
+    ' Recommendation and Ads services fetch from external providers
+    Recommendation --> DB
+    Recommendation --> Cache
+
+    Ads --> AdNetwork
+
+    ' Email service queues emails before sending
+    Email --> EmailQueue
+    EmailQueue --> SMTP
+
+}
+@enduml

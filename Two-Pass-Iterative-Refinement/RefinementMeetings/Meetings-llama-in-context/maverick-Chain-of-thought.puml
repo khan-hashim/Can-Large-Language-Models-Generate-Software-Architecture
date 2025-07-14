@@ -1,0 +1,23 @@
+@startuml
+package MeetingManagementPlatform {
+    [Registrations] as Registrations
+    [Meeting Groups] as GroupService
+    [Meetings] as MeetingService
+    [Payments] as PaymentService
+    [Frontend] as WebApp
+    [Proposal Approval] as ApprovalService
+
+    WebApp --> Registrations
+    Registrations --> WebApp
+    WebApp --> GroupService
+    GroupService --> ApprovalService
+    ApprovalService --> GroupService
+    ApprovalService --> Registrations
+    WebApp --> MeetingService
+    MeetingService --> GroupService
+    MeetingService --> PaymentService
+    PaymentService --> MeetingService
+    GroupService --> PaymentService
+    PaymentService --> GroupService
+}
+@enduml

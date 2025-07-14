@@ -1,0 +1,72 @@
+@startuml
+!pragma layout smetana
+
+package "E-commerce Platform" {
+    [Frontend] as Frontend
+    [API Gateway] as API
+    [Product Catalog Service] as Catalog
+    [Shopping Cart Service] as Cart
+    [Checkout Service] as Checkout
+    [Payment Service] as Payment
+    [Shipping Service] as Shipping
+    [Currency Conversion Service] as Currency
+    [Recommendation Service] as Recommendation
+    [Advertisement Service] as Ads
+    [Email Service] as Email
+    [User Session Management Service] as SessionManagement
+
+    database "Products Database" as ProductsDB
+    database "Order Database" as OrderDB
+    database "Cart Database" as CartDB
+    database "Session Store" as SessionStore
+}
+
+cloud "Payment Gateway (External)" as PaymentGateway
+cloud "Shipping Carrier API (External)" as ShippingCarrierAPI
+
+' User interactions
+Frontend --> API
+
+' API Gateway orchestrating services
+API --> Catalog
+API --> Cart
+API --> Checkout
+API --> Recommendation
+API --> Ads
+API --> SessionManagement
+API --> Currency ' FIX 1: API interacts with Currency Service
+API --> Email       ' FIX 5: Email service accessible via API for general use
+
+' Cart Service interactions
+Cart --> Catalog    ' FIX 4: Cart gets product details from Catalog, not direct DB
+Cart --> CartDB     ' FIX 3: Dedicated database for Cart persistence
+
+' Checkout Service interactions
+Checkout --> Cart
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Email
+Checkout --> OrderDB
+Checkout --> Catalog ' Checkout validates product details with Catalog
+
+' Payment Service interactions
+Payment --> OrderDB
+Payment --> PaymentGateway ' FIX 6: External Payment Gateway integration
+
+' Shipping Service interactions
+Shipping --> ShippingCarrierAPI ' FIX 6: External Shipping Carrier API integration
+
+' Recommendation Service interactions
+Recommendation --> Cart
+Recommendation --> Catalog
+
+' Advertisement Service interactions
+Ads --> Catalog ' FIX 8: Ads can pull product info for contextual ads
+
+' Catalog Service interactions
+Catalog --> ProductsDB
+
+' Session Management interactions
+SessionManagement --> SessionStore ' FIX 2: Session Management uses a Session Store (renamed from UserDB)
+
+@enduml

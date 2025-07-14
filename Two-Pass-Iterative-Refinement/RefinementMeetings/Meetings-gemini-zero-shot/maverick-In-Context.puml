@@ -1,0 +1,34 @@
+@startuml
+skinparam packageStyle rectangle
+
+package "Meeting Management Platform" {
+    [Frontend] as WebInterface
+    [Registrations Service] as Registrations
+    [Authentication Service] as AuthService
+    [Meeting Group Management Service] as MeetingGroupMgmt
+    [Meetings Management Service] as MeetingMgmt
+    [Payment Subsystem] as PaymentSubsystem
+    [Database] as Database
+
+    WebInterface --> Registrations: Handles User Sign-up
+    WebInterface --> AuthService: Handles User Login / Logout
+    WebInterface --> MeetingGroupMgmt: Allows Proposing & Managing Groups (Member/Admin)
+    WebInterface --> MeetingMgmt: Allows Creating & Managing Meetings
+
+    Registrations --> AuthService: Registers New Users & Assigns Roles
+    AuthService --> Database: Stores User Credentials & Roles
+    AuthService --> MeetingGroupMgmt: Provides Authenticated User Context (Role, ID)
+    AuthService --> MeetingMgmt: Provides Authenticated User Context (Role, ID)
+
+    MeetingGroupMgmt --> Database: Stores/Retrieves Meeting Group Data
+    MeetingGroupMgmt --> PaymentSubsystem: Initiates Group Payment Processing
+    MeetingGroupMgmt --> PaymentSubsystem: Validates Group Payment Status for Eligibility
+    MeetingGroupMgmt --> MeetingMgmt: Provides Approved Group Info for Meeting Creation
+
+    MeetingMgmt --> Database: Stores/Retrieves Meeting Data
+    MeetingMgmt --> PaymentSubsystem: Initiates Per-Meeting Fee Processing
+    MeetingMgmt --> PaymentSubsystem: Validates Meeting Payment Status
+
+    PaymentSubsystem --> Database: Stores Payment Transaction Records & Status
+}
+@enduml

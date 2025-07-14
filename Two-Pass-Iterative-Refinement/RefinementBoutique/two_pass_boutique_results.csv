@@ -1,0 +1,37 @@
+Model,Metric,First Mean,First Q1,First Q3,Second Mean,Second Q1,Second Q3
+o3-Zero-Shot,Edit Distance,99.0,79.0,119.0,62.0,31.0,83.0
+o3-Zero-Shot,Precision,0.56,0.51,0.62,0.71,0.61,0.81
+o3-Zero-Shot,Recall,0.87,0.82,0.91,0.89,0.89,0.91
+o3-Zero-Shot,F1 Score,0.68,0.65,0.73,0.78,0.73,0.84
+o3-In-Context,Edit Distance,73.0,69.0,79.0,47.0,27.0,69.0
+o3-In-Context,Precision,0.64,0.62,0.65,0.75,0.65,0.83
+o3-In-Context,Recall,0.91,0.91,0.91,0.9,0.91,0.92
+o3-In-Context,F1 Score,0.75,0.74,0.76,0.81,0.76,0.85
+o3-Chain-of-Thought,Edit Distance,63.0,49.0,79.0,78.0,64.0,91.0
+o3-Chain-of-Thought,Precision,0.68,0.63,0.73,0.56,0.51,0.64
+o3-Chain-of-Thought,Recall,0.92,0.92,0.92,0.8,0.9,0.92
+o3-Chain-of-Thought,F1 Score,0.78,0.74,0.81,0.66,0.66,0.75
+Flash-Zero-Shot,Edit Distance,56.0,40.0,68.0,58.0,39.0,69.0
+Flash-Zero-Shot,Precision,0.69,0.63,0.76,0.7,0.63,0.79
+Flash-Zero-Shot,Recall,0.88,0.88,0.92,0.77,0.76,0.79
+Flash-Zero-Shot,F1 Score,0.78,0.73,0.83,0.73,0.7,0.76
+Flash-In-Context,Edit Distance,42.0,20.0,53.0,67.0,45.0,81.0
+Flash-In-Context,Precision,0.79,0.7,0.92,0.66,0.6,0.75
+Flash-In-Context,Recall,0.83,0.78,0.88,0.78,0.74,0.79
+Flash-In-Context,F1 Score,0.8,0.73,0.89,0.71,0.69,0.75
+Flash-Chain-of-Thought,Edit Distance,47.0,36.0,56.0,73.0,42.0,96.0
+Flash-Chain-of-Thought,Precision,0.65,0.69,0.75,0.65,0.56,0.74
+Flash-Chain-of-Thought,Recall,0.78,0.79,0.92,0.84,0.78,0.91
+Flash-Chain-of-Thought,F1 Score,0.71,0.76,0.81,0.73,0.67,0.77
+Mavarick-Zero-Shot,Edit Distance,43.0,39.0,49.0,48.0,39.0,58.0
+Mavarick-Zero-Shot,Precision,0.84,0.79,0.92,0.78,0.68,0.93
+Mavarick-Zero-Shot,Recall,0.72,0.65,0.78,0.87,0.87,0.92
+Mavarick-Zero-Shot,F1 Score,0.77,0.75,0.8,0.81,0.78,0.84
+Maverick-In-Context,Edit Distance,54.0,24.0,67.0,44.0,32.0,47.0
+Maverick-In-Context,Precision,0.76,0.62,0.92,0.8,0.74,0.91
+Maverick-In-Context,Recall,0.83,0.78,0.92,0.84,0.78,0.92
+Maverick-In-Context,F1 Score,0.78,0.69,0.87,0.81,0.77,0.84
+Maverick-Chain-of-Thought,Edit Distance,31.0,27.0,40.0,41.0,27.0,52.0
+Maverick-Chain-of-Thought,Precision,0.84,0.81,0.9,0.81,0.72,0.91
+Maverick-Chain-of-Thought,Recall,0.82,0.78,0.89,0.86,0.83,0.92
+Maverick-Chain-of-Thought,F1 Score,0.83,0.81,0.85,0.83,0.8,0.87

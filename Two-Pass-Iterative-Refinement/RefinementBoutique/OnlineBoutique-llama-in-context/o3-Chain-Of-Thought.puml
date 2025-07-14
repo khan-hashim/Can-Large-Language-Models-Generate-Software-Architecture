@@ -1,0 +1,50 @@
+@startuml
+package ECommerceSystem {
+
+    [Frontend] as Frontend
+    [API] as API
+    [SessionService] as Session
+
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Checkout] as Checkout
+    [PaymentGateway] as Payment
+    [ShippingService] as Shipping
+    [CurrencyService] as Currency
+    [RecommendationService] as Recommend
+    [AdNetwork] as Ads
+    [EmailService] as Email
+
+    [RelationalDatabase] as DB
+    [Cache] as Cache
+    [SMTPServer] as SMTP
+
+    Frontend --> API
+    API --> Session
+    Session --> Cache
+
+    API --> Catalog
+    API --> Cart
+    API --> Checkout
+    API --> Recommend
+    API --> Ads
+    API --> Currency
+
+    Catalog --> DB
+    Catalog --> Cache
+    Cart --> DB
+    Cart --> Cache
+
+    Checkout --> Cart
+    Checkout --> Payment
+    Checkout --> Shipping
+    Checkout --> Email
+    Checkout --> Currency
+
+    Payment --> DB
+    Shipping --> DB
+    Recommend --> DB
+    Ads --> DB
+    Email --> SMTP
+}
+@enduml

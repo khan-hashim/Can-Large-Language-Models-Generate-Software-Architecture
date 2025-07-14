@@ -1,0 +1,53 @@
+@startuml
+
+package "E-commerce Platform" {
+
+  [Frontend] as Frontend
+  [API Gateway] as API
+  [Product Catalog Service] as Catalog
+  [Shopping Cart Service] as Cart
+  [Checkout Service] as Checkout
+  [Payment Processing Service] as Payment
+  [Shipping Service] as Shipping
+  [Currency Conversion Service] as Currency
+  [Recommendation Service] as Recommendation
+  [Advertisement Service] as Ads
+  [Notification Service] as Notification
+  [Session Management Service] as SessionManagement
+
+  database "Products Database" as ProductsDB
+  database "Cart Database" as CartDB
+  database "Orders Database" as OrderDB
+  database "User Session Database" as SessionDB
+
+  ' User interaction flows
+  Frontend --> API : Requests
+
+  ' API Gateway routing to various services
+  API --> Catalog : Browse products
+  API --> Cart : Manage cart items
+  API --> Checkout : Initiate order
+  API --> Recommendation : Get recommendations
+  API --> Ads : Fetch contextual ads
+  API --> SessionManagement : Manage user sessions
+  API --> Currency : Convert currency for display
+
+  ' Checkout process orchestration
+  Checkout --> Payment : Process payment
+  Checkout --> Shipping : Get estimates & arrange delivery
+  Checkout --> Notification : Send order confirmation
+  Checkout --> OrderDB : Persist order details
+  Checkout --> Cart : Retrieve cart contents for order
+
+  ' Service-to-database interactions
+  Catalog --> ProductsDB : Stores & retrieves product data
+  Cart --> CartDB : Stores & retrieves cart data
+  SessionManagement --> SessionDB : Stores & retrieves session data
+
+  ' Recommendation service dependencies
+  Recommendation --> Cart : Uses cart contents for context
+  Recommendation --> Catalog : Accesses product information
+
+}
+
+@enduml

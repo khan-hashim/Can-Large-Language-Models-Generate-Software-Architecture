@@ -1,0 +1,50 @@
+@startuml
+!pragma layout smetana
+
+package "E-commerce Platform" {
+    [Frontend] as Frontend
+    [API] as API
+    [Catalog] as Catalog
+    [Cart] as Cart
+    [Checkout] as Checkout
+    [Payment] as Payment
+    [Shipping] as Shipping
+    [ShippingEstimator] as ShippingEstimator
+    [Currency] as Currency
+    [Recommendation] as Recommendation
+    [Ads] as Ads
+    [Email] as Email
+    [SessionManagement] as SessionManagement
+    [SessionStore] as SessionStore
+    [ProductsDB] as ProductsDB
+    [OrderDB] as OrderDB
+
+    Frontend --> API
+    API --> Catalog
+    API --> Cart
+    API --> Checkout
+    API --> Recommendation
+    API --> Ads
+    API --> SessionManagement
+
+    Cart --> Catalog
+
+    Checkout --> Cart
+    Checkout --> Payment
+    Checkout --> Shipping
+    Checkout --> Email
+    Checkout --> OrderDB
+
+    Payment --> Checkout
+
+    Shipping --> ShippingEstimator
+    ShippingEstimator --> Catalog
+
+    Recommendation --> Cart
+    Recommendation --> Catalog
+
+    Catalog --> ProductsDB
+    SessionManagement --> SessionStore
+    Checkout --> SessionManagement
+}
+@enduml

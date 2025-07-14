@@ -1,0 +1,78 @@
+@startuml
+package "E-Commerce Platform" {
+
+[Frontend] as Frontend
+[Session Manager] as SessionManager
+[API Gateway] as APIGateway
+
+[Catalog Service] as CatalogService
+[Cart Service] as CartService
+[Recommendation Engine] as RecommendationEngine
+[Ads Service] as AdsService
+[Currency Service] as CurrencyService
+[Checkout Service] as CheckoutService
+[Payment Service] as PaymentService
+[Shipping Estimator] as ShippingEstimator
+[Email Service] as EmailService
+
+[Product DB] as ProductDB
+[Cart Store] as CartStore
+[Order DB] as OrderDB
+
+[Exchange Rate Provider] as ExchangeProvider
+[External Payment Gateway] as ExternalPayment
+[Shipping Carrier API] as ShippingAPI
+[Ad Network] as AdNetwork
+[SMTP Server] as SMTP
+
+' Frontend and Session
+Frontend --> APIGateway
+Frontend --> SessionManager
+SessionManager --> APIGateway
+
+' API Gateway routes
+APIGateway --> CatalogService
+APIGateway --> CartService
+APIGateway --> RecommendationEngine
+APIGateway --> AdsService
+APIGateway --> CurrencyService
+APIGateway --> CheckoutService
+
+' Catalog and Product
+CatalogService --> ProductDB
+
+' Cart logic
+CartService --> CartStore
+CartService --> ProductDB
+
+' Recommendations based on cart and catalog
+RecommendationEngine --> CartService
+RecommendationEngine --> CatalogService
+
+' Ads use Ad Network
+AdsService --> AdNetwork
+
+' Currency Conversion
+CurrencyService --> ExchangeProvider
+
+' Checkout
+CheckoutService --> CartService
+CheckoutService --> CurrencyService
+CheckoutService --> ShippingEstimator
+CheckoutService --> PaymentService
+CheckoutService --> EmailService
+CheckoutService --> OrderDB
+CheckoutService --> RecommendationEngine
+CheckoutService --> AdsService
+
+' Shipping Estimates
+ShippingEstimator --> ShippingAPI
+
+' Payment integration
+PaymentService --> ExternalPayment
+
+' Email
+EmailService --> SMTP
+
+}
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+package MeetingManagementPlatform {
+
+[User Management] as UserMgmt
+[Authentication and Roles] as AuthRoles
+[Group Proposal Management] as GroupProposals
+[Admin Review System] as AdminReview
+[Meeting Scheduling] as MeetingSched
+[Payment Service] as Payments
+[Web Application Interface] as WebApp
+
+WebApp --> AuthRoles: user login, role assignment
+WebApp --> UserMgmt: user registration, profile updates
+
+AuthRoles --> UserMgmt: retrieves user data and role
+UserMgmt --> GroupProposals: allows members to propose groups
+
+WebApp --> GroupProposals: submit group proposals
+GroupProposals --> AdminReview: send proposals for admin action
+AdminReview --> GroupProposals: approve/reject proposals
+
+GroupProposals --> Payments: check group payment validity
+GroupProposals --> MeetingSched: only approved+paid groups allowed
+
+WebApp --> MeetingSched: meeting creation, updates
+MeetingSched --> Payments: verify per-meeting fee transaction
+Payments --> MeetingSched: payment confirmation
+
+WebApp --> Payments: payment initiation (group/meeting)
+}
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+package MeetingManagementPlatform {
+  [Frontend] as FE
+  [AuthService] as Auth
+  [UserService] as Users
+  [GroupService] as Groups
+  [GroupApprovalService] as GroupApproval
+  [MeetingService] as Meetings
+  [PaymentService] as Payments
+  [PaymentValidator] as PaymentCheck
+
+  FE --> Auth
+  Auth --> Users
+
+  FE --> Groups
+  Groups --> Users
+  Groups --> GroupApproval
+
+  FE --> GroupApproval
+  GroupApproval --> Groups
+
+  Groups --> PaymentCheck
+  PaymentCheck --> Payments
+
+  FE --> Meetings
+  Meetings --> Groups
+  Meetings --> PaymentCheck
+  Meetings --> Payments
+
+  FE --> Payments
+
+  Payments --> Users
+}
+@enduml

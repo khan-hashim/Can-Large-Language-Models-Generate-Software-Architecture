@@ -1,0 +1,77 @@
+@startuml
+package EcommercePlatform {
+
+  [User Browser]             as User
+  [Frontend]                 as Frontend
+  [API Gateway]              as API
+
+  [Catalog Service]          as Catalog
+  [Cart Service]             as Cart
+  [Recommendation Service]   as Recommend
+  [Advertisement Service]    as Ads
+  [Currency Service]         as CurrencySvc
+  [Checkout Orchestrator]    as Checkout
+  [Order Service]            as Order
+  [Payment Service]          as PaymentSvc
+  [Shipping Service]         as ShippingSvc
+  [Email Service]            as EmailSvc
+
+  [Products Database]        as ProductsDB
+  [Cart Database]            as CartDB
+  [Order Database]           as OrderDB
+  [Currency Cache]           as CurrencyCache
+
+  [Payment Gateway API]      as PaymentAPI
+  [Shipping Carrier API]     as ShippingAPI
+  [Exchange Rate API]        as ExchangeAPI
+  [Ad Network API]           as AdNetworkAPI
+  [SMTP Email Server]        as SMTPServer
+
+  ' User interaction flow
+  User --> Frontend
+  Frontend --> API
+
+  ' API calls services
+  API --> Catalog
+  API --> Cart
+  API --> Recommend
+  API --> Ads
+  API --> CurrencySvc
+  API --> Checkout
+
+  ' Services to Databases
+  Catalog --> ProductsDB
+  Cart --> CartDB
+  Order --> OrderDB
+
+  ' Recommendation depends on Catalog and Cart info
+  Recommend --> Catalog
+  Recommend --> Cart
+
+  ' Ads depend on external ad network
+  Ads --> AdNetworkAPI
+
+  ' Currency service uses cache and external exchange API
+  CurrencySvc --> CurrencyCache
+  CurrencySvc --> ExchangeAPI
+
+  ' Checkout orchestrates order creation, payment, shipping, email, currency
+  Checkout --> Order
+  Checkout --> PaymentSvc
+  Checkout --> ShippingSvc
+  Checkout --> EmailSvc
+  Checkout --> CurrencySvc
+  Checkout --> Cart
+
+  ' Payment service depends on external payment gateway and currency
+  PaymentSvc --> PaymentAPI
+  PaymentSvc --> CurrencySvc
+
+  ' Shipping service depends on external shipping carrier API
+  ShippingSvc --> ShippingAPI
+
+  ' Email service depends on SMTP server
+  EmailSvc --> SMTPServer
+
+}
+@enduml

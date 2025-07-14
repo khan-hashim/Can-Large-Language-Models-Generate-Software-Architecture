@@ -1,0 +1,53 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+
+[Frontend] as FE
+[Catalog Service] as Catalog
+[Cart Service] as Cart
+[Order Service] as Order
+[Payment Service] as Payment
+[Shipping Service] as Shipping
+[Currency Converter] as Currency
+[Recommendation Engine] as Reco
+[Ads Service] as Ads
+[Notification Service] as Notification
+[Message Queue] as MQ
+
+' Core frontend access
+FE --> Catalog
+FE --> Cart
+FE --> Currency
+FE --> Reco
+FE --> Ads
+
+' Cart interaction with catalog
+Cart --> Catalog
+
+' Order process
+Order --> Cart
+Order --> Payment
+Order --> Shipping
+Order --> Notification
+
+' Currency used for pricing
+Catalog --> Currency
+
+' Shipping needs cart contents and location for estimates
+Shipping --> Cart
+
+' Recommendations depend on cart and catalog
+Reco --> Cart
+Reco --> Catalog
+
+' Payment and shipping events pushed to message queue
+Payment --> MQ
+Shipping --> MQ
+
+' Notification subscribes to events from MQ
+MQ --> Notification
+
+}
+
+@enduml

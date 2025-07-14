@@ -1,0 +1,31 @@
+@startuml
+package MeetingManagementPlatform {
+  [Registrations] as RegistrationsService
+  [Authentication] as AuthService
+  [Meeting Groups] as GroupService
+  [Meetings] as MeetingService
+  [Payments] as PaymentService
+  [Frontend] as WebApp
+
+  ' User Interface interactions with core services
+  WebApp --> RegistrationsService
+  WebApp --> AuthService
+
+  ' Authentication and Authorization flow
+  AuthService --> RegistrationsService
+
+  ' Business Logic interactions, with explicit authorization checks
+  WebApp --> GroupService
+  WebApp --> MeetingService
+
+  GroupService --> AuthService
+  MeetingService --> AuthService
+
+  ' Inter-service communication
+  MeetingService --> GroupService
+
+  ' Payment processing flow (corrected direction)
+  MeetingService --> PaymentService
+  GroupService --> PaymentService
+}
+@enduml

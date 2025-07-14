@@ -1,0 +1,69 @@
+@startuml
+package "E-Commerce Platform" {
+
+  [Frontend] as Frontend
+  [Session Manager] as SessionManager
+  [API Gateway] as API
+
+  [Product Catalog] as Catalog
+  [Shopping Cart] as Cart
+  [Product Recommendation] as Recommendation
+  [Contextual Ads] as Ads
+  [Currency Conversion] as Currency
+  [Order Checkout] as Checkout
+  [Payment Processing] as Payment
+  [Shipping Management] as Shipping
+  [Email Service] as Email
+
+  [Product Database] as ProductsDB
+  [Cart Data Store] as CartStore
+  [Order Database] as OrderDB
+
+  [External Exchange Rate Provider] as FXProvider
+  [Payment Gateway] as PaymentGateway
+  [Shipping Carrier API] as ShippingCarrierAPI
+  [External Ads Provider] as AdsProvider
+  [SMTP Server] as SmtpServer
+
+  ' User Interface Interactions
+  Frontend --> API
+  Frontend --> SessionManager
+
+  ' API Gateway and Internal Services
+  API --> SessionManager : Manages sessions for requests
+  API --> Catalog
+  API --> Cart
+  API --> Recommendation
+  API --> Ads
+  API --> Currency
+  API --> Checkout
+
+  ' Core Service Data Flows
+  Catalog --> ProductsDB
+  Cart --> CartStore
+  Cart --> ProductsDB : Gets product details (e.g., price, stock)
+  Cart --> Shipping : Gets estimated shipping costs/times
+
+  ' Recommendation and Ads Interactions
+  Recommendation --> Catalog : Accesses product data for recommendations
+  Recommendation --> Cart : Bases recommendations on cart contents
+  Ads --> AdsProvider : Fetches advertisements
+  Ads --> Cart : Uses cart contents for contextual ads
+
+  ' Currency Conversion
+  Currency --> FXProvider : Fetches real-time exchange rates
+
+  ' Checkout Process Orchestration
+  Checkout --> Cart : Retrieves cart contents
+  Checkout --> Currency : For currency conversion during order prep
+  Checkout --> Shipping : Coordinates shipping arrangements
+  Checkout --> Payment : Processes payment
+  Checkout --> Email : Triggers order confirmation email
+  Checkout --> OrderDB : Persists order details
+
+  ' External Service Integrations
+  Payment --> PaymentGateway : Processes transactions
+  Shipping --> ShippingCarrierAPI : Interfaces with carriers for rates/tracking
+  Email --> SmtpServer : Sends emails
+}
+@enduml

@@ -1,0 +1,72 @@
+@startuml
+!pragma layout smetana
+
+package "E-Commerce Platform" {
+    [Frontend] as Frontend
+    [User Session Manager] as SessionManager
+    [Product Catalog Service] as CatalogService
+    [Shopping Cart Service] as CartService
+    [Order Processing Service] as OrderService
+    [Payment Gateway Service] as PaymentService
+    [Shipping Service] as ShippingService
+    [Currency Conversion Service] as CurrencyService
+    [Product Recommendation Service] as RecommendationService
+    [Advertisement Service] as AdsService
+    [Notification Service] as NotificationService
+    [Message Queue] as MQ
+    [Database] as Database
+}
+
+package "External Integrations" {
+    [Payment Gateway] as ExternalPaymentGateway
+    [Shipping Carrier API] as ExternalShippingAPI
+}
+
+Frontend --> SessionManager : Manages user sessions
+Frontend --> CatalogService : Browses products
+Frontend --> CartService : Manages cart items
+Frontend --> CurrencyService : Displays prices in currency
+Frontend --> RecommendationService : Displays recommendations
+Frontend --> AdsService : Displays ads
+
+SessionManager --> Database : Stores session data
+
+CartService --> CatalogService : Retrieves product details
+CartService --> Database : Persists cart contents
+
+OrderService --> CartService : Retrieves cart contents
+OrderService --> PaymentService : Initiates payment
+OrderService --> ShippingService : Arranges shipping
+OrderService --> Database : Stores order details
+OrderService --> MQ : Publishes order events (e.g., for notifications)
+
+PaymentService --> ExternalPaymentGateway : Processes payments
+PaymentService --> MQ : Publishes payment events
+
+ShippingService --> ExternalShippingAPI : Gets rates & arranges delivery
+ShippingService --> MQ : Publishes shipping events
+
+RecommendationService --> CatalogService : Accesses product data
+RecommendationService --> Database : Accesses user behavior/cart data for recommendations
+
+AdsService --> Database : Stores ad configurations/data
+
+NotificationService <-- MQ : Consumes order/payment/shipping events
+NotificationService --> Database : Logs notifications
+NotificationService --> "Email Service (External)" as EmailService : Sends confirmation emails
+
+CatalogService --> Database : Stores product data
+
+CurrencyService --> "External Exchange Rate API" as ExchangeRateAPI : Fetches exchange rates
+
+MQ --> NotificationService : Delivers messages
+
+Database <-- CatalogService
+Database <-- CartService
+Database <-- OrderService
+Database <-- RecommendationService
+Database <-- AdsService
+Database <-- NotificationService
+Database <-- SessionManager
+
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+package ECommercePlatform {
+    [Frontend] as Frontend
+    [Backend Service] as Backend
+
+    package CoreServices {
+        [Product Catalog Service] as CatalogService
+        [Shopping Cart Service] as CartService
+        [Checkout Service] as CheckoutService
+        [Payment Service] as PaymentService
+        [Shipping Estimator Service] as ShippingEstimatorService
+        [Currency Conversion Service] as CurrencyService
+        [Recommendation Engine] as RecommendationEngine
+        [Email Notification Service] as EmailService
+        [Advertisement Service] as AdService
+    }
+
+    package DataStores {
+        [Product Database] as ProductDB
+        [Order Database] as OrderDB
+        [User Session Store] as SessionStore
+    }
+
+    package ExternalServices {
+        [Payment Gateway] as PaymentGateway
+        [Shipping Carrier API] as ShippingAPI
+        [Exchange Rate API] as ExchangeRateAPI
+        [External Email Service] as ExternalEmail
+        [External Ad Network] as ExternalAdNetwork
+    }
+
+    ' Frontend Interactions '
+    Frontend --> Backend : Requests
+
+    ' Backend Orchestration '
+    Backend --> CatalogService : Product Info
+    Backend --> CartService : Manage Cart
+    Backend --> CheckoutService : Initiate Order
+    Backend --> RecommendationEngine : Get Recommendations
+    Backend --> CurrencyService : Convert Currency
+    Backend --> SessionStore : Manage Sessions
+    Backend --> AdService : Fetch Ads
+
+    ' Service to Database Interactions '
+    CatalogService --> ProductDB : Read/Write Products
+    CartService --> ProductDB : Validate Products
+    CartService --> SessionStore : Store Cart Data
+    CheckoutService --> OrderDB : Persist Order
+    CheckoutService --> ProductDB : Stock Check
+    RecommendationEngine --> ProductDB : Read Products
+    AdService --> ExternalAdNetwork : Get Ads (if external)
+
+    ' Checkout Flow '
+    CheckoutService --> CartService : Retrieve Cart Contents
+    CheckoutService --> PaymentService : Process Payment
+    CheckoutService --> ShippingEstimatorService : Calculate Shipping
+    CheckoutService --> EmailService : Send Confirmation
+
+    ' External Service Integrations '
+    PaymentService --> PaymentGateway : Process Transaction
+    ShippingEstimatorService --> ShippingAPI : Get Estimates
+    CurrencyService --> ExchangeRateAPI : Get Rates
+    EmailService --> ExternalEmail : Send Email
+
+    ' Recommendation Engine Logic '
+    RecommendationEngine --> CartService : Based on Cart Contents
+}
+@enduml

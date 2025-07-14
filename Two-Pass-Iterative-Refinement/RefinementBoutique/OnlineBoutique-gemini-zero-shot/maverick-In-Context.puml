@@ -1,0 +1,57 @@
+@startuml
+package ECommercePlatform {
+
+  [Frontend] as Frontend
+  [API Gateway/Backend] as Backend
+  [Product Service] as ProductService
+  [Cart Service] as CartService
+  [Order Service] as OrderService
+  [Payment Service] as PaymentService
+  [Shipping Service] as ShippingService
+  [Currency Conversion Service] as CurrencyService
+  [Recommendation Service] as RecommendationService
+  [Email Service] as EmailService
+  [Advertisement Service] as AdService
+  [Database] as DB
+
+  package ExternalServices {
+    [External Payment Gateway] as ExternalPaymentGateway
+    [External Currency API] as ExternalCurrencyAPI
+    [External Shipping Carrier API] as ExternalShippingAPI
+  }
+
+  ' User Interaction Flow '
+  Frontend --> Backend : All requests
+
+  ' Backend Orchestration and Service Interactions '
+  Backend --> ProductService : Browse Catalog, Product Details
+  Backend --> CartService : Manage Cart
+  Backend --> OrderService : Initiate Checkout
+  Backend --> RecommendationService : Get Recommendations
+  Backend --> CurrencyService : Convert Currency for Display
+  Backend --> AdService : Fetch Contextual Ads
+  Backend --> DB : Manage User Sessions
+
+  ' Checkout Process Orchestration (by OrderService) '
+  OrderService --> CartService : Retrieve Cart Contents
+  OrderService --> ProductService : Validate Product Details/Inventory
+  OrderService --> PaymentService : Process Payment
+  OrderService --> ShippingService : Arrange Shipping, Get Estimates
+  OrderService --> EmailService : Send Order Confirmation
+
+  ' Service Dependencies '
+  RecommendationService --> ProductService : Base recommendations on products
+  PaymentService --> ExternalPaymentGateway : Process transactions
+  CurrencyService --> ExternalCurrencyAPI : Fetch exchange rates
+  ShippingService --> ExternalShippingAPI : Get real-time shipping quotes
+
+  ' Data Persistence '
+  ProductService --> DB : Store Product Data
+  CartService --> DB : Store Cart Data
+  OrderService --> DB : Store Order Data
+  RecommendationService --> DB : Store Recommendation Models/Data
+  PaymentService --> DB : Store Payment Records
+  ShippingService --> DB : Store Shipping Details
+
+}
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+package ECommercePlatform {
+  [Frontend] as Frontend
+  [Products Service] as ProductService
+  [Cart Service] as CartService
+  [Checkout Service] as CheckoutService
+  [Payment Service] as PaymentService
+  [Shipping Service] as ShippingService
+  [Currency Service] as CurrencyService
+  [Recommendation Service] as RecommendationService
+  [Ads Service] as AdsService
+  [Database] as Database
+  [Notification Service] as NotificationService
+}
+
+Frontend --> ProductService : browses products
+Frontend --> CartService : manages cart items
+Frontend --> CheckoutService : initiates checkout
+Frontend --> RecommendationService : requests recommendations
+Frontend --> AdsService : displays ads
+
+ProductService --> CurrencyService : gets exchange rates for display
+ProductService --> Database : retrieves product data
+
+CartService --> Database : persists cart data
+
+CheckoutService --> CartService : retrieves cart contents
+CheckoutService --> PaymentService : processes payment
+CheckoutService --> ShippingService : arranges shipping
+CheckoutService --> CurrencyService : final currency conversion
+CheckoutService --> Database : stores order details
+CheckoutService --> NotificationService : sends order confirmation email
+
+RecommendationService --> Database : retrieves product data for recommendations
+
+NotificationService --> Database : logs email status (optional)
+
+@enduml

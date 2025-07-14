@@ -1,0 +1,71 @@
+@startuml
+package ECommerceSystem {
+
+  [Frontend] as Frontend
+  [API Gateway] as APIGateway
+  [Session Service] as SessionService
+  [Authentication Service] as AuthService
+  [Catalog Service] as CatalogService
+  [Cart Service] as CartService
+  [Checkout Service] as CheckoutService
+  [Order Service] as OrderService
+  [Payment Service] as PaymentServiceInternal
+  [Shipping Service] as ShippingServiceInternal
+  [Currency Conversion Service] as CurrencyServiceInternal
+  [Recommendation Service] as RecommendationService
+  [Advertisement Service] as AdService
+  [Notification Service] as NotificationService
+
+  [Product Database] as ProductDB
+  [Cache] as Cache
+
+}
+
+package ExternalServices {
+  [External Payment Gateway] as PaymentGatewayExternal
+  [External Shipping Provider] as ShippingProviderExternal
+  [External Currency API] as CurrencyAPIExternal
+  [External Ad Network] as AdNetworkExternal
+  [SMTP Server] as SMTPServerExternal
+}
+
+// Frontend Interactions
+Frontend --> APIGateway : User Requests
+
+// API Gateway Routing
+APIGateway --> AuthService : User Auth/Registration
+APIGateway --> SessionService : Session Validation/Management
+APIGateway --> CatalogService : Product Browsing
+APIGateway --> CartService : Cart Operations
+APIGateway --> CheckoutService : Order Placement
+APIGateway --> CurrencyServiceInternal : Currency Display
+APIGateway --> RecommendationService : Product Suggestions
+APIGateway --> AdService : Ad Content
+
+// Session Service
+SessionService --> Cache : Stores Session Data
+
+// Data Services
+CatalogService --> ProductDB : Reads Product Data
+CatalogService --> Cache : Caches Product Data
+CartService --> ProductDB : Persists Cart Data
+CartService --> Cache : Caches Active Carts
+OrderService --> ProductDB : Stores Orders & Updates Inventory
+
+// Checkout Flow Orchestration
+CheckoutService --> CartService : Retrieves Cart Contents
+CheckoutService --> PaymentServiceInternal : Initiates Payment
+CheckoutService --> ShippingServiceInternal : Arranges Shipping
+CheckoutService --> OrderService : Creates/Updates Order Record
+CheckoutService --> NotificationService : Triggers Confirmation Email
+
+// External Integrations (Internal Service to External Provider)
+PaymentServiceInternal --> PaymentGatewayExternal : Processes Transactions
+ShippingServiceInternal --> ShippingProviderExternal : Fetches Rates & Labels
+CurrencyServiceInternal --> CurrencyAPIExternal : Fetches Exchange Rates
+RecommendationService --> ProductDB : Gathers Product Data
+RecommendationService --> CartService : Gathers Cart Data
+AdService --> AdNetworkExternal : Retrieves Ads
+NotificationService --> SMTPServerExternal : Sends Emails
+
+@enduml

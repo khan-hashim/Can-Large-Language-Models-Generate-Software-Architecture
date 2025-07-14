@@ -1,0 +1,41 @@
+@startuml
+package MeetingManagementPlatform {
+
+  [Frontend] as WebInterface
+  [UserService] as UserSvc
+  [AuthService] as AuthSvc
+  [AdminDashboard] as AdminUI
+  [Meeting Group Management] as MeetingGroupMgmt
+  [Meetings] as MeetingMgmt
+  [Payments] as PaymentProcessing
+  [Database] as DB
+
+  WebInterface --> UserSvc: handles user registration/profile
+  WebInterface --> AuthSvc: handles login and session management
+  WebInterface --> MeetingGroupMgmt: propose/view meeting groups
+  WebInterface --> MeetingMgmt: create/view meetings
+  WebInterface --> PaymentProcessing: initiate group/meeting payments
+
+  AuthSvc --> DB: manages credentials and sessions
+  UserSvc --> DB: stores user profiles and roles
+
+  AuthSvc --> MeetingGroupMgmt: enforces role-based access (member/admin)
+  AuthSvc --> MeetingMgmt: enforces member permissions
+
+  UserSvc --> MeetingGroupMgmt: provides user role info
+  MeetingGroupMgmt --> DB: persists group proposals and status
+  MeetingGroupMgmt --> PaymentProcessing: checks subscription status
+  MeetingGroupMgmt --> MeetingMgmt: exposes approved groups
+
+  AdminUI --> AuthSvc: authenticates admin
+  AdminUI --> MeetingGroupMgmt: approves/rejects group proposals
+
+  MeetingMgmt --> DB: stores meeting info
+  MeetingMgmt --> PaymentProcessing: checks per-meeting payment status
+  MeetingMgmt --> MeetingGroupMgmt: verifies group is approved and valid
+  MeetingMgmt --> UserSvc: confirms user is group member
+
+  PaymentProcessing --> DB: records transactions and statuses
+}
+
+@enduml

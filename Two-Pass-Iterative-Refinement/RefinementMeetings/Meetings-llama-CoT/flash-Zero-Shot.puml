@@ -1,0 +1,52 @@
+@startuml
+
+package "Community Meeting Platform" {
+    [Frontend] as WebUI
+    [API Gateway] as APIGateway
+    [Registrations] as Registrations
+    [Meeting Group Management Service] as GroupManagement
+    [Proposal Management Service] as ProposalManagement
+    [Meetings] as MeetingManagement
+    [Administration] as Administration
+    [Payment Integration] as PaymentIntegration
+    [Payment Gateway Interface] as PaymentGatewayInterface
+    [Payment Gateway] as PaymentGateway
+    [Data Access Layer] as DataAccessLayer
+    [DB] as Database
+    [Service Registry] as ServiceRegistry
+
+    WebUI --> APIGateway
+    APIGateway --> Registrations
+    APIGateway --> GroupManagement
+    APIGateway --> MeetingManagement
+    APIGateway --> Administration
+    APIGateway --> PaymentIntegration
+    APIGateway --> ProposalManagement
+
+    Registrations --> DataAccessLayer
+    GroupManagement --> DataAccessLayer
+    MeetingManagement --> DataAccessLayer
+    Administration --> DataAccessLayer
+    ProposalManagement --> DataAccessLayer
+
+    GroupManagement --> PaymentIntegration
+    GroupManagement --> ProposalManagement
+    MeetingManagement --> GroupManagement
+    Administration --> Registrations
+    ProposalManagement --> Administration
+
+    PaymentIntegration --> PaymentGatewayInterface
+    PaymentGatewayInterface --> PaymentGateway
+    PaymentIntegration --> DataAccessLayer
+
+    DataAccessLayer --> Database
+
+    APIGateway --> ServiceRegistry
+    Registrations --> ServiceRegistry
+    GroupManagement --> ServiceRegistry
+    MeetingManagement --> ServiceRegistry
+    Administration --> ServiceRegistry
+    PaymentIntegration --> ServiceRegistry
+    ProposalManagement --> ServiceRegistry
+}
+@enduml

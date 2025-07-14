@@ -1,0 +1,84 @@
+@startuml
+package EcommercePlatform {
+
+[User Browser]             as User
+[Frontend]                 as Frontend
+[API Gateway]              as APIGW
+
+[Catalog Service]          as Catalog
+[Cart Service]             as Cart
+[Recommendation Service]   as Recommend
+[Ad Service]               as Ads
+[Currency Service]         as Currency
+[Checkout Service]         as Checkout
+[Order Service]            as Order
+[Payment Service]          as Payment
+[Shipping Service]         as Shipping
+[Notification Service]     as Email
+[Session Manager]          as Session
+
+[Product Catalog DB]       as ProductsDB
+[Cart DB]                  as CartDB
+[Order DB]                 as OrderDB
+[Currency Cache]           as CurrencyCache
+
+[Payment Gateway]          as PaymentAPI
+[Shipping Carrier API]     as ShippingAPI
+[Exchange Rate API]        as CurrencyAPI
+[Ad Network]               as AdNet
+[SMTP Server]              as SMTP
+
+' User interactions
+User --> Frontend
+Frontend --> APIGW
+Frontend --> Session
+Frontend --> Ads
+Frontend --> Recommend
+Frontend --> Cart
+
+' API gateway delegation
+APIGW --> Catalog
+APIGW --> Cart
+APIGW --> Recommend
+APIGW --> Ads
+APIGW --> Currency
+APIGW --> Checkout
+
+' Internal services to data
+Catalog --> ProductsDB
+Cart --> CartDB
+Order --> OrderDB
+Currency --> CurrencyCache
+
+' Recommendation system
+Recommend --> Catalog
+Recommend --> Cart
+Recommend --> Session
+
+' Currency and external exchange
+Currency --> CurrencyAPI
+
+' Ads and ad networks
+Ads --> AdNet
+
+' Checkout and its subcomponents
+Checkout --> Order
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Email
+Checkout --> Currency
+Checkout --> Cart
+
+Payment --> PaymentAPI
+Payment --> Currency
+
+Shipping --> ShippingAPI
+
+Email --> SMTP
+
+' Session management
+Session --> Cart
+Session --> Recommend
+
+}
+@enduml

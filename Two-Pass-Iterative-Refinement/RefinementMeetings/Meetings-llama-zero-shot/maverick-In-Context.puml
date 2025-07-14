@@ -1,0 +1,22 @@
+@startuml
+package MeetingManagementPlatform {
+    [Registrations] as Registrations
+    [Meeting Group Proposal Management] as ProposalMgmt
+    [Meeting Group Management] as MeetingGroupMgmt
+    [Meetings] as MeetingMgmt
+    [Payment Processing] as PaymentProcessing
+    [Frontend] as WebInterface
+
+    WebInterface --> Registrations: handles user registration and role management
+    Registrations --> ProposalMgmt: provides user role information for meeting group proposals
+    WebInterface --> ProposalMgmt: handles meeting group proposals
+    ProposalMgmt --> MeetingGroupMgmt: sends approved meeting group information
+    WebInterface --> MeetingGroupMgmt: handles meeting group management
+    MeetingGroupMgmt --> MeetingMgmt: provides approved meeting group information for meeting creation
+    WebInterface --> MeetingMgmt: handles meeting creation and management
+    MeetingGroupMgmt --> PaymentProcessing: validates payment status for meeting group
+    MeetingMgmt --> PaymentProcessing: validates payment status for meeting creation
+    PaymentProcessing --> MeetingGroupMgmt: updates meeting group payment status
+    PaymentProcessing --> MeetingMgmt: updates meeting payment status
+}
+@enduml

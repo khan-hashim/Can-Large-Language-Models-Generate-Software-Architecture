@@ -1,0 +1,44 @@
+@startuml
+package ECommercePlatform {
+[Frontend] as Frontend
+[API Gateway] as APIGateway
+[Product Service] as ProductSvc
+[Cart Service] as Cart
+[Order Service] as Order
+[Payment Service] as Payment
+[Shipping Service] as Shipping
+[Currency Service] as Currency
+[Recommendation Service] as Recommendation
+[Ads Service] as Ads
+[Email Service] as Email
+[Session Manager] as SessionManager
+
+Frontend --> APIGateway
+
+APIGateway --> ProductSvc
+APIGateway --> Cart
+APIGateway --> Order
+APIGateway --> Recommendation
+APIGateway --> Ads
+APIGateway --> SessionManager
+APIGateway --> Shipping
+
+Order --> Cart
+Order --> Payment
+Order --> Shipping
+Order --> Email
+Order --> Currency
+
+ProductSvc --> Currency
+
+Cart --> ProductSvc
+Cart --> Currency
+
+Recommendation --> ProductSvc
+Recommendation --> Cart
+
+Ads --> Cart
+
+Shipping --> ProductSvc
+}
+@enduml

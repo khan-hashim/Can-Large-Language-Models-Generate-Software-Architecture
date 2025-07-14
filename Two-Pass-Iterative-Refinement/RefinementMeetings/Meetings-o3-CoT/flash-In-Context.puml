@@ -1,0 +1,46 @@
+@startuml
+package "Community Meeting Management Platform" {
+
+[Frontend] as UI
+[API Gateway] as API
+
+[User Access Service] as UserAccess
+[Meeting Group Service] as GroupService
+[Meeting Management Service] as MeetingService
+[Admin Approval Service] as AdminService
+[Payment Service] as PaymentService
+
+[User Database] as UserDB
+[Group Database] as GroupDB
+[Meeting Database] as MeetingDB
+[Payment Database] as PaymentDB
+
+' UI routes all requests through API
+UI --> API
+
+' API routes to various services
+API --> UserAccess
+API --> GroupService
+API --> MeetingService
+API --> AdminService
+API --> PaymentService
+
+' UserAccess interacts with user DB
+UserAccess --> UserDB
+
+' Group proposal & state
+GroupService --> GroupDB
+AdminService --> GroupService
+AdminService --> UserAccess
+
+' Meeting management
+MeetingService --> MeetingDB
+MeetingService --> GroupService
+
+' Payment handling
+PaymentService --> PaymentDB
+GroupService --> PaymentService
+PaymentService --> UserAccess
+
+}
+@enduml

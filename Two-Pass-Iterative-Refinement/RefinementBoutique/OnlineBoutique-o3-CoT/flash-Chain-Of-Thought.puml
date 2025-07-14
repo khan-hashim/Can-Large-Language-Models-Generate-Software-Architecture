@@ -1,0 +1,75 @@
+@startuml
+
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[API Gateway] as API
+[Catalog Service] as Catalog
+[Cart Service] as Cart
+[Checkout Service] as Checkout
+[Payment Service] as Payment
+[Shipping Service] as Shipping
+[Currency Service] as Currency
+[Currency Rate Updater] as CurrencyUpdater
+[Recommendation Service] as Recommendation
+[Ads Service] as Ads
+[Notification Service] as Notification
+[Session Management Service] as SessionManagement
+
+database "ProductsDB" as ProductsDB
+database "CartDB" as CartDB
+database "OrderDB" as OrderDB
+database "SessionDB" as SessionDB
+
+' Frontend interacts with API Gateway
+Frontend --> API
+
+' API handles sessions
+API --> SessionManagement
+SessionManagement --> SessionDB
+
+' API routes to core services
+API --> Catalog
+API --> Cart
+API --> Checkout
+API --> Recommendation
+API --> Ads
+
+' Catalog uses ProductsDB and Currency service for price conversions
+Catalog --> ProductsDB
+Catalog --> Currency
+
+' Cart uses CartDB and Currency for price display
+Cart --> CartDB
+Cart --> Currency
+
+' Checkout orchestrates Payment, Shipping, Notification, OrderDB, and Cart cleanup
+Checkout --> Payment
+Checkout --> Shipping
+Checkout --> Notification
+Checkout --> OrderDB
+Checkout --> Cart
+
+' Payment writes to OrderDB
+Payment --> OrderDB
+
+' Shipping writes to OrderDB and provides shipping estimates
+Shipping --> OrderDB
+Shipping --> Cart ' For shipping cost estimation before checkout
+
+' Recommendation uses Cart, Catalog, Currency, and Session info
+Recommendation --> Cart
+Recommendation --> Catalog
+Recommendation --> Currency
+Recommendation --> SessionManagement
+
+' Ads uses SessionManagement and Cart to personalize ads
+Ads --> SessionManagement
+Ads --> Cart
+
+' Currency service has an internal updater for exchange rates
+CurrencyUpdater --> Currency
+
+}
+
+@enduml

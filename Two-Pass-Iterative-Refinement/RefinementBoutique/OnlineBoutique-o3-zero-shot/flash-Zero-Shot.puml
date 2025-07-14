@@ -1,0 +1,71 @@
+@startuml
+!pragma layout smetana
+
+package "E-commerce Platform" {
+  [Frontend] as Frontend
+  [API Gateway] as API
+  [Catalog Service] as Catalog
+  [Cart Service] as Cart
+  [Checkout Service] as Checkout
+  [Payment Service] as Payment
+  [Shipping Service] as Shipping
+  [Currency Service] as Currency
+  [Recommendation Engine] as Recommendation
+  [Advertisement Service] as Ads
+  [Email Service] as Email
+  [Session Management] as SessionManagement
+  [Products Database] as ProductsDB
+  [Orders Database] as OrderDB
+  [User Database] as UserDB
+
+  ' User interface interaction
+  Frontend --> API
+  Frontend --> SessionManagement
+  Frontend --> Ads
+  Frontend --> Currency
+
+  ' API dispatching to services
+  API --> Catalog
+  API --> Cart
+  API --> Checkout
+  API --> Recommendation
+  API --> SessionManagement
+
+  ' Catalog reads from products
+  Catalog --> ProductsDB
+
+  ' Cart interacts with product info and user info
+  Cart --> Catalog
+  Cart --> ProductsDB
+  Cart --> UserDB
+
+  ' Checkout orchestrates payment, shipping, etc.
+  Checkout --> Cart
+  Checkout --> Catalog
+  Checkout --> Payment
+  Checkout --> Shipping
+  Checkout --> Email
+  Checkout --> OrderDB
+  Checkout --> Currency
+
+  ' Payment interacts with currency and order record
+  Payment --> Currency
+  Payment --> OrderDB
+
+  ' Shipping needs item info and order data
+  Shipping --> Catalog
+  Shipping --> OrderDB
+
+  ' Email needs user contact info
+  Email --> UserDB
+
+  ' Recommendations depend on cart and products
+  Recommendation --> Cart
+  Recommendation --> Catalog
+  Recommendation --> ProductsDB
+
+  ' Session manager handles user tracking
+  SessionManagement --> UserDB
+}
+
+@enduml

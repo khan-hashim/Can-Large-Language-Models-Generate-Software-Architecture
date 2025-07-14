@@ -1,0 +1,38 @@
+@startuml
+package MeetingManagementPlatform {
+  [Web Interface] as Frontend
+
+  package BackendServices {
+    [API Gateway/Application Services] as APIGateway
+    [User Management Service] as UserMgmt
+    [Meeting Group Service] as MeetingGroupSvc
+    [Meeting Service] as MeetingSvc
+    [Payment Service] as PaymentSvc
+  }
+
+  package DataStore {
+    [Database] as DB
+  }
+
+  ' Frontend interactions
+  Frontend --> APIGateway
+
+  ' API Gateway orchestration
+  APIGateway --> UserMgmt
+  APIGateway --> MeetingGroupSvc
+  APIGateway --> MeetingSvc
+  APIGateway --> PaymentSvc
+
+  ' Service internal interactions and dependencies
+  MeetingGroupSvc --> UserMgmt
+  MeetingGroupSvc --> PaymentSvc
+  MeetingSvc --> MeetingGroupSvc
+  MeetingSvc --> PaymentSvc
+
+  ' Data persistence
+  UserMgmt --> DB
+  MeetingGroupSvc --> DB
+  MeetingSvc --> DB
+  PaymentSvc --> DB
+}
+@enduml

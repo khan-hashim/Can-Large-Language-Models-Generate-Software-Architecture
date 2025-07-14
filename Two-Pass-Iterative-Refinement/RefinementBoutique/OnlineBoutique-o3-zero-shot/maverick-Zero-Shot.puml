@@ -1,0 +1,41 @@
+@startuml
+package ECommercePlatform {
+
+[Frontend] as Frontend
+[Product Catalog Service] as ProductService
+[Cart Service] as Cart
+[Checkout Service] as Checkout
+[Order Service] as OrderService
+[Payment Gateway] as Payment
+[Shipping Service] as Shipping
+[Currency Conversion Service] as Currency
+[Recommendation Engine] as Recommendation
+[Ad Server] as Ads
+[Email Notification Service] as EmailService
+[Session Manager] as Session
+
+' User Interaction Flow
+Frontend --> ProductService
+Frontend --> Cart
+Frontend --> Recommendation
+Frontend --> Ads
+Frontend --> Session
+Frontend --> Currency
+
+' Cart and Recommendation
+Recommendation --> Cart
+
+' Checkout Process
+Frontend --> Checkout
+Checkout --> Cart
+Checkout --> OrderService
+OrderService --> Payment
+OrderService --> Shipping
+OrderService --> Currency
+OrderService --> EmailService
+
+' Other dependencies
+ProductService --> Currency
+}
+
+@enduml

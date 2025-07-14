@@ -1,0 +1,42 @@
+@startuml
+package ECommercePlatform {
+    [Frontend] as Frontend
+    [Product Service] as ProductService
+    [Cart Service] as CartService
+    [Checkout Service] as CheckoutService
+    [Payment Service] as PaymentService
+    [Shipping Service] as ShippingService
+    [Currency Converter Service] as CurrencyConverterService
+    [Recommendation Service] as RecommendationService
+    [Email Service] as EmailService
+    [Session Management Service] as SessionManagementService
+    [Order Service] as OrderService
+    [Advertisement Service] as AdvertisementService
+    [Payment Gateway] as PaymentGateway
+    [Exchange Rate Provider] as ExchangeRateProvider
+}
+
+' User interactions with Frontend
+Frontend --> ProductService : browses & views catalog
+Frontend --> CartService : manages items in cart
+Frontend --> CheckoutService : initiates checkout
+Frontend --> CurrencyConverterService : displays converted prices
+Frontend --> RecommendationService : displays recommendations
+Frontend --> AdvertisementService : displays ads
+Frontend --> SessionManagementService : manages user sessions
+
+' Checkout orchestration flow
+CheckoutService --> CartService : retrieves cart contents
+CheckoutService --> ProductService : validates product details & inventory
+CheckoutService --> ShippingService : requests shipping estimate (with item details)
+CheckoutService --> PaymentService : processes payment
+CheckoutService --> OrderService : persists finalized order
+CheckoutService --> EmailService : sends order confirmation
+
+' Service specific interactions
+PaymentService --> PaymentGateway : communicates for transaction
+CurrencyConverterService --> ExchangeRateProvider : fetches real-time rates
+RecommendationService --> ProductService : gets product data for algorithms
+RecommendationService --> CartService : analyzes cart for personalization
+
+@enduml

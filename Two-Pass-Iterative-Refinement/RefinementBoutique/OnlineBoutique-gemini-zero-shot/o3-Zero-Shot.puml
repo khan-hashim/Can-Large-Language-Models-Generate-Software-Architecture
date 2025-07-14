@@ -1,0 +1,70 @@
+@startuml
+package EcommercePlatform {
+
+[User Browser]           as User
+[Frontend]               as Frontend
+[API Gateway]            as API
+
+[Product Catalog Service] as Catalog
+[Shopping Cart Service]  as Cart
+[Recommendation Service] as Recommend
+[Advertisement Service]  as Ads
+[Currency Conversion Service] as CurrencyService
+[Checkout Orchestration Service] as Checkout
+[Order Management Service] as Order
+[Payment Processing Service] as PaymentService
+[Shipping Management Service] as ShippingService
+[Email Notification Service] as EmailService
+
+[Product Database]       as ProductsDB
+[Shopping Cart Database] as CartDB
+[Order Database]         as OrderDB
+[Currency Exchange Rate Cache] as CurrencyCache
+
+[External Payment Gateway] as PaymentGateway
+[External Shipping Carrier API] as ShippingCarrierAPI
+[External Exchange Rate API] as ExchangeRateAPI
+[External Ad Network]    as AdNet
+[External SMTP Server]   as SMTPServer
+
+
+User --> Frontend
+Frontend --> API
+
+
+API --> Catalog : Manages products
+API --> Cart : Manages user carts
+API --> Recommend : Provides recommendations
+API --> Ads : Delivers contextual ads
+API --> CurrencyService : Handles currency conversion
+API --> Checkout : Initiates checkout process
+
+
+Catalog --> ProductsDB : Stores product data
+Cart --> CartDB : Stores cart data
+Order --> OrderDB : Stores order details
+
+Recommend --> Catalog : Fetches product info for recommendations
+Recommend --> Cart : Uses cart contents for personalization
+
+Ads --> AdNet : Fetches ads
+
+CurrencyService --> ExchangeRateAPI : Retrieves real-time rates
+CurrencyService --> CurrencyCache : Caches exchange rates
+
+Checkout --> Order : Creates new order
+Checkout --> PaymentService : Initiates payment
+Checkout --> ShippingService : Arranges shipping
+Checkout --> EmailService : Sends confirmation email
+Checkout --> CurrencyService : Converts currency for order
+
+Order --> Cart : Retrieves cart contents for order creation
+
+PaymentService --> PaymentGateway : Processes payment transactions
+PaymentService --> CurrencyService : Converts payment amounts
+
+ShippingService --> ShippingCarrierAPI : Calculates costs and delivery times
+
+EmailService --> SMTPServer : Sends emails
+}
+@enduml
