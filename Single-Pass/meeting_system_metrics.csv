@@ -1,0 +1,10 @@
+Model-Prompt,TP,FN,FP,Edit Distance,Precision,Recall,F1
+o3-Zero-Shot,13,17,21,49.0,0.382,0.433,0.406
+o3-In-Context,17,13,14,28.0,0.548,0.567,0.557
+o3-Chain-of-Thought,14,16,18,30.0,0.438,0.467,0.452
+Flash-Zero-Shot,11,19,13,39.0,0.458,0.367,0.407
+Flash-In-Context,15,15,6,58.0,0.714,0.5,0.588
+Flash-Chain-of-Thought,15,15,11,47.0,0.577,0.5,0.536
+Maverick-Zero-Shot,4,26,8,79.0,0.333,0.133,0.19
+Maverick-In-Context,4,26,8,86.0,0.333,0.133,0.19
+Maverick-Chain-of-Thought,4,26,8,81.0,0.333,0.133,0.19

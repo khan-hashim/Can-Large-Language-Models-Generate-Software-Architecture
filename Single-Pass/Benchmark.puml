@@ -1,0 +1,43 @@
+@startuml
+package "My Meetings System" {
+
+  [Frontend]            as SPA
+  [API Gateway]         as API
+
+  [Registrations]       as Registrations
+  [User Access]         as UserAccess
+  [Meetings]            as Meetings
+  [Administration]      as Administration
+  [Payments]            as Payments
+
+  [Registrations DB]    as RegData
+  [User Access DB]      as UserData
+  [Meetings DB]         as MeetData
+  [Administration DB]   as AdmData
+  [Payments DB]         as PayData
+
+  [Events Bus]          as EventsBus
+
+  SPA --> API
+
+  API --> Registrations
+  API --> UserAccess
+  API --> Meetings
+  API --> Administration
+  API --> Payments
+
+  Registrations --> UserAccess
+
+  Registrations  --> RegData
+  UserAccess     --> UserData
+  Meetings       --> MeetData
+  Administration --> AdmData
+  Payments       --> PayData
+
+  Registrations  --> EventsBus
+  UserAccess     --> EventsBus
+  Meetings       --> EventsBus
+  Administration --> EventsBus
+  Payments       --> EventsBus
+}
+@enduml

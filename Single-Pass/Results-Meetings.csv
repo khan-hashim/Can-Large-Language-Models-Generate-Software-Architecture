@@ -1,0 +1,10 @@
+Item Type, True Positives, False Negatives, False Positives, Edit Distance
+o3-Zero-Shot,13,17,21, 74.0
+o3-In-Context, 17,13,14,64.0
+o3-Chain-of-Thought, 14, 16, 18,46.0
+Flash-Zero-Shot, 11, 19, 13, 52.0
+Flash-In-Context, 15, 15, 6, 35.0
+Flash-Chain-of-Thought, 15, 15, 11, 46.0
+Mavrick-Zero-Shot, 4, 26, 8, 66.0
+Maverick-in-Context, 4, 26, 8, 43.0
+Maverick-Chain-of-Thought, 4, 26, 8, 40.0

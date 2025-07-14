@@ -1,0 +1,18 @@
+@startuml
+package MeetingManagementPlatform {
+[Registrations] as Registrations
+[Meeting Groups] as GroupService
+[Meetings] as MeetingService
+[Payments] as PaymentService
+[Frontend] as WebApp
+
+WebApp --> Registrations : handles user registration and login
+WebApp --> GroupService : handles meeting group proposals and management
+GroupService --> Registrations : retrieves user information
+WebApp --> MeetingService : handles meeting creation within approved groups
+MeetingService --> GroupService : checks if a group is approved
+MeetingService --> PaymentService : checks payment status before creating a meeting
+PaymentService --> MeetingService : processes payments for meetings
+GroupService --> PaymentService : processes group payments
+}
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+package "Community Meeting Platform" {
+[Frontend] as WebUI
+[API Gateway] as APIGateway
+[Registrations] as Registrations
+[Meeting Group Management Service] as GroupManagement
+[Meetings] as MeetingManagement
+[Administration] as Administration
+[Payments] as PaymentIntegration
+[DB] as Database
+[Payment Gateway] as PaymentGateway
+
+WebUI --> APIGateway : Uses
+APIGateway --> Registrations : Routes Requests
+APIGateway --> GroupManagement : Routes Requests
+APIGateway --> MeetingManagement : Routes Requests
+APIGateway --> Administration : Routes Requests
+APIGateway --> PaymentIntegration : Routes Requests
+
+Registrations --> Database : Reads/Writes User Data
+GroupManagement --> Database : Reads/Writes Group Data
+MeetingManagement --> Database : Reads/Writes Meeting Data
+Administration --> Database : Reads/Writes Proposal Data
+
+GroupManagement --> PaymentIntegration : Validates Group Payments
+MeetingManagement --> PaymentIntegration : Processes Meeting Fees
+Administration --> Registrations : Assigns Admin Role
+
+PaymentIntegration --> PaymentGateway : Delegates Payments
+PaymentIntegration --> Database : Updates Payment Status
+
+}
+
+@enduml

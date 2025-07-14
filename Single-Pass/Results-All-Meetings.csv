@@ -1,0 +1,28 @@
+Item Type, True Positives, False Negatives, False Positives
+o3-Zero-Shot,13,17,21
+o3-Zero-Shot-Components , 7 , 6 , 4
+o3-Zero-Shot-Connections , 6 , 11 , 17
+o3-In-Context, 17,13,14
+o3-In-Context-Components , 6 , 7 , 4
+o3-In-Context-Connections , 5 , 12 , 14
+o3-Chain-of-Thought, 14, 16, 18
+o3-Chain-of-Thought-Components , 7 , 6 , 5
+o3-Chain-of-Thought-Connections , 7 , 10 , 13
+Flash-Zero-Shot, 11, 19, 13
+Flash-Zero-Shot-Components , 6 , 7 , 3
+Flash-Zero-Shot-Connections , 5 , 12 , 10
+Flash-In-Context, 15, 15, 6
+Flash-In-Context-Components , 8 , 5 , 2
+Flash-In-Context-Connections , 7 , 10 , 4
+Flash-Chain-of-Thought, 15, 15, 11
+Flash-Chain-of-Thought-Components , 8 , 5 , 4
+Flash-Chain-of-Thought-Connections , 7 , 10 , 7
+Mavrick-Zero-Shot, 4, 26, 8
+Mavrick-Zero-Shot-Components , 4 , 9 , 1
+Mavrick-Zero-Shot-Connections , 0 , 17 , 7
+Maverick-in-Context, 4, 26, 8
+Maverick-in-Context-Components , 4 , 9 , 1
+Maverick-in-Context-Connections , 0 , 10 , 7
+Maverick-Chain-of-Thought, 4, 26, 8
+Maverick-Chain-of-Thought-Components , 4 , 9 , 1
+Maverick-Chain-of-Thought-Connections , 0 , 17 , 7

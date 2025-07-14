@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
+<XMI.header>
+<XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+</XMI.header>
+<XMI.content>
+<UML:Model name="PlantUML" xmi.id="model1">
+<UML:Namespace.ownedElement>
+<UML:Component name="MeetingManagementPlatform" namespace="model1" xmi.id="ent0002">
+<UML:Classifier.feature/>
+<UML:Component name="Registrations" namespace="model1" xmi.id="ent0003">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Meeting Group Management" namespace="model1" xmi.id="ent0004">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Meetings" namespace="model1" xmi.id="ent0005">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Payments" namespace="model1" xmi.id="ent0006">
+<UML:Classifier.feature/>
+</UML:Component>
+<UML:Component name="Frontend" namespace="model1" xmi.id="ent0007">
+<UML:Classifier.feature/>
+</UML:Component>
+</UML:Component>
+<UML:Association name="handles user registration and role management" namespace="model1" xmi.id="ass15">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass15" type="ent0007" xmi.id="end16">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass15" type="ent0003" xmi.id="end17">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="handles meeting group proposals and management" namespace="model1" xmi.id="ass18">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass18" type="ent0007" xmi.id="end19">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass18" type="ent0004" xmi.id="end20">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="handles meeting creation and management" namespace="model1" xmi.id="ass21">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass21" type="ent0007" xmi.id="end22">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass21" type="ent0005" xmi.id="end23">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="validates payment status for meeting group" namespace="model1" xmi.id="ass24">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass24" type="ent0004" xmi.id="end25">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass24" type="ent0006" xmi.id="end26">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="validates payment status for meeting creation" namespace="model1" xmi.id="ass27">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass27" type="ent0005" xmi.id="end28">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass27" type="ent0006" xmi.id="end29">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="provides user role information for meeting group proposals" namespace="model1" xmi.id="ass30">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass30" type="ent0003" xmi.id="end31">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass30" type="ent0004" xmi.id="end32">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+<UML:Association name="provides approved meeting group information for meeting creation" namespace="model1" xmi.id="ass33">
+<UML:Association.connection>
+<UML:AssociationEnd association="ass33" type="ent0004" xmi.id="end34">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+<UML:AssociationEnd association="ass33" type="ent0005" xmi.id="end35">
+<UML:AssociationEnd.participant/>
+</UML:AssociationEnd>
+</UML:Association.connection>
+</UML:Association>
+</UML:Namespace.ownedElement>
+</UML:Model>
+</XMI.content>
+</XMI>
