@@ -1,6 +1,6 @@
-# Can-Large-Language-Models-Generate-Software-Architecture
+# Use-of-Large-Language-Models-in-Generating-Software-Architecture
 
-This repository contains the chats for our work "Can Large Language Models Generate Software Architecture? An Exploratory Study"
+This repository contains the chats for our work "Use of Large Language Models in Generating Software Architecture"
 
 There are two main parts to this repository:
 
