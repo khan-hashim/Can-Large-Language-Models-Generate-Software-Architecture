@@ -4,5 +4,5 @@ This repository contains the chats for our work "Can Large Language Models Gener
 
 There are two main parts to this repository:
 
-Architecture Generation - contains chat links for generate archtiecture using GPT-4o and OpenAI-o1
-Software Design Document Generation - contains chat links for generating software design document using GPT-4o and OpenAI-o1
+Single-Pass-Generation - contains results for all the both systems for single pass architecture generation for all prompt and model combinations including the generated architectures and the result csv files.
+Two-Pass-Iterative Refinement - contains results for all the both systems for two-pass iterative architecture generation for all prompt and model combinations including the generated architectures and the result csv files.
