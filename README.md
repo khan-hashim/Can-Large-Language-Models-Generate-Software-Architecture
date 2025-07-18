@@ -1,4 +1,4 @@
-# Use-of-Large-Language-Models-in-Generating-Software-Architecture
+# Can-AI-Build-Systems-An-Exploratory-Study-on-Generating-Software-Architecture-With-LLMs
 
 This repository contains the chats for our work "Use of Large Language Models in Generating Software Architecture"
 
